@@ -1,5 +1,8 @@
 # rewrite-format-sql <!-- omit in toc -->
 
+[![pipeline status](https://git.sefin.fortaleza.ce.gov.br/dwouglas/rewrite-format-sql/badges/main/pipeline.svg)](https://git.sefin.fortaleza.ce.gov.br/dwouglas/rewrite-format-sql/commits/main)
+[![coverage report](https://git.sefin.fortaleza.ce.gov.br/dwouglas/rewrite-format-sql/badges/main/coverage.svg)](https://git.sefin.fortaleza.ce.gov.br/dwouglas/rewrite-format-sql)
+
 Um Recipe do OpenRewrite para formatar blocos de código SQL/HQL dentro de código Java.
 
 O recipe `io.github.mhagnumdw.FormatSqlBlockRecipe` formata automaticamente SQL ou HQL embutidos em [Text Blocks](https://docs.oracle.com/en/java/javase/13/text_blocks/index.html) presente em algumas anotações.

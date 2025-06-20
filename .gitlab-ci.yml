@@ -1,0 +1,81 @@
+.cache:
+  - &global_m2_cache
+    key: "global_m2_cache"
+    paths:
+    - .m2/repository
+
+default:
+  image:
+    name: eclipse-temurin:17.0.15_6-jdk-ubi9-minimal
+    pull_policy: if-not-present
+  tags:
+    - maven
+  interruptible: true
+  cache:
+    - <<: *global_m2_cache
+
+stages:
+  - build
+
+# determina se o pipeline deve ser criado ou nao
+workflow:
+  # https://docs.gitlab.com/ee/ci/yaml/workflow.html#switch-between-branch-pipelines-and-merge-request-pipelines
+  rules:
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS && $CI_PIPELINE_SOURCE == "push"
+      when: never
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" # via merge_requests/${iid}/pipelines API ou via interface web: Merge Request > Pipelines > Run pipeline
+    - if: $CI_PIPELINE_SOURCE == "trigger"
+    - if: $CI_PIPELINE_SOURCE == "pipeline" # via trigger/pipeline API
+    - if: $CI_PIPELINE_SOURCE == "api" # for pipelines triggered by the pipelines API (POST /projects/${project}/pipeline)
+    - if: $CI_PIPELINE_SOURCE == "web" # via interface web: Project > CI/CD > Pipelines > Run Pipeline
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - if: $CI_COMMIT_BRANCH && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+variables:
+  # estrategia de busca do repositório
+  GIT_STRATEGY: fetch
+  # profundidade de busca do repositório
+  GIT_DEPTH: 1
+
+  # Fastzip is a performant archiver for cache/artifact archiving and extraction
+  FF_USE_FASTZIP: 'true'
+  # Use no compression for caches: https://docs.gitlab.com/ee/ci/runners/configure_runners.html#artifact-and-cache-settings
+  CACHE_COMPRESSION_LEVEL: "fastest"
+
+  # Maven
+  MAVEN_LOCAL_SETTINGS: /tmp/maven-settings-sefin.xml
+  MAVEN_REMOTE_SETTINGS: https://cdn.sefin.fortaleza.ce.gov.br/maven-settings-sefin-grpfor-v004.xml
+  MAVEN_OPTS: "-Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository -Dorg.slf4j.simpleLogger.showDateTime=true"
+  MAVEN_CLI_OPTS: "-B -V -s $MAVEN_LOCAL_SETTINGS -gs $MAVEN_LOCAL_SETTINGS"
+  MVN_CMD: ./mvnw
+
+.common:
+  .maven:
+    - &maven_download_settings
+      - curl -o $MAVEN_LOCAL_SETTINGS $MAVEN_REMOTE_SETTINGS || wget -O $MAVEN_LOCAL_SETTINGS $MAVEN_REMOTE_SETTINGS
+
+before_script:
+  - set -x
+
+########## BUILD ###################################
+
+compile:
+  stage: build
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - target
+    reports:
+      coverage_report:
+        coverage_format: jacoco
+        path: target/site/jacoco/jacoco.xml
+  coverage: '/^Jacoco Coverage Total: (\d+\.\d+)%/'
+  variables:
+    MAVEN_JACOCO_REPORT_CSV: target/site/jacoco/jacoco.csv
+  script:
+    - *maven_download_settings
+    - $MVN_CMD $MAVEN_CLI_OPTS clean verify
+    - echo "Resultado da cobertura de código:"
+    - |
+      awk -F"," '{ instructions+=$4+$5+$6+$7+$8+$9+$10+$11+$12+$13; covered+=$5+$7+$9+$11+$13 } END { printf "Jacoco Coverage Total: %.5f%%\n", 100*covered/instructions }' ${MAVEN_JACOCO_REPORT_CSV}
