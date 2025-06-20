@@ -1,85 +1,185 @@
-# rewrite-format-sql
+# rewrite-format-sql <!-- omit in toc -->
 
-Recipe do OpenRewrite para formatar blocos de código SQL/HQL dentro de código Java.
+Um Recipe do OpenRewrite para formatar blocos de código SQL/HQL dentro de código Java.
 
-⚠️ Esse projeto está em fase muito embrionária. **E no momento contém apenas código de estudo.** O nome do Recipe no momento é `SayHelloRecipe` e no futuro talvez seja `FormatSqlBlockRecipe`. ⚠️
+O recipe `io.github.mhagnumdw.FormatSqlBlockRecipe` formata automaticamente SQL ou HQL embutidos em [Text Blocks](https://docs.oracle.com/en/java/javase/13/text_blocks/index.html) presente em algumas anotações.
 
-Esse projeto utiliza Java 8 para o source principal e Java 17 para o source do teste. Ao importar no Eclipse como projeto maven, é preciso alterar manualmente para Java 17: clique com o `botão direito no projeto > Build Path > Configure Build Path... > Libraries`, remova o Java 8 e adicione o Java 17 usando o botão `Add Library...`.
+- [Anotações que são suportadas](#anotações-que-são-suportadas)
+- [Opções configuráveis](#opções-configuráveis)
+- [Exemplo](#exemplo)
+- [Fazendo uso](#fazendo-uso)
+  - [Configurando no `pom.xml`](#configurando-no-pomxml)
+  - [Sem adicionar nada ao projeto](#sem-adicionar-nada-ao-projeto)
+- [Para desenvolvedores](#para-desenvolvedores)
 
-Esse projeto foi criado inicialmente seguindo os guias oficiais:
+## Anotações que são suportadas
 
-- <https://docs.openrewrite.org/authoring-recipes/recipe-development-environment>
-- <https://docs.openrewrite.org/authoring-recipes/writing-a-java-refactoring-recipe>
+O `FormatSqlBlockRecipe` formata SQL/HQL presentes em Text Blocks nas seguintes anotações:
 
-## O que o SayHelloRecipe faz
+- `org.hibernate.annotations.processing.HQL`
+- `org.hibernate.annotations.processing.SQL`
+- `jakarta.data.repository.Query`
 
-Nome completo do recipe: `io.github.mhagnumdw.SayHelloRecipe`
+Melhorias futuras podem permitir a configuração de anotações personalizadas.
 
-O `SayHelloRecipe` adicionará um método `hello()` a uma classe especificada pelo usuário, caso essa classe ainda não tenha um. O método adicionado será esse:
+Engine de formatação: [com.github.vertical-blank:sql-formatter](https://github.com/vertical-blank/sql-formatter)
+
+## Opções configuráveis
+
+| Tipo    | Nome              | Descrição                                                                                                                                                                                           | Exemplo  |
+| :------ | :---------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------  | :------- |
+| String  | `classFilePath`   | Opcional. O caminho para os arquivos Java que o Recipe deve processar. Aceita uma glob expression, with a multiple patterns may be specified, separated by a semicolon `;`. Defaults to `**/*.java`.| `**/*Repository.java` |
+| String  | `sqlDialect`      | Opcional. The dialect to use for formatting. Opções válidas: `sql` (StandardSql), `mysql`, `postgresql`, `db2`, `plsql` (Oracle PL/SQL), `n1ql` (Couchbase N1QL), `redshift`, `spark`, `tsql` (SQL Server Transact-SQL). Detalhes [aqui](https://github.com/vertical-blank/sql-formatter). Defaults to `sql`. | `plsql` |
+| String  | `indent`          | Opcional. A string a ser usada para indentação. Defaults to 4 spaces. | `"    "` para quatro espaços, `"\t"` para um tab |
+| Integer | `maxColumnLength` | Opcional. O comprimento máximo de uma linha antes que o formatador tente quebrá-la.Defaults to `120`. | `100` |
+| Boolean | `uppercase`       | Opcional. Se deve converter palavras-chave SQL para maiúsculas. O padrão é `false`. | `false`                                                                                                                               |
+
+## Exemplo
+
+Antes
 
 ```java
-public String hello() {
-    return "Hello from <fqn-da-classe-especificada-pelo-usuário-aqui>!";
+package com.mycompany;
+
+import jakarta.data.repository.Query;
+
+public interface HolidayRepository {
+    @Query("""
+        select * from Holiday where year = :year order by name""")
+    void findByYear(int year);
 }
 ```
 
-## Fazendo uso do SayHelloRecipe
+Depois
 
-Empacotar e instalar:
+```java
+package com.mycompany;
+
+import jakarta.data.repository.Query;
+
+public interface HolidayRepository {
+    @Query("""
+        select
+            *
+        from
+            Holiday
+        where
+            year = :year
+        order by
+            name""")
+    void findByYear(int year);
+}
+```
+
+## Fazendo uso
+
+Abaixo três modos de uso.
+
+### Configurando no `pom.xml`
+
+Se você tem um projeto e vai executar essa Recipe regularmente, essa é a forma recomenda.
+
+Dentro da seção de plugins, adicionar:
+
+```xml
+<plugin>
+    <groupId>org.openrewrite.maven</groupId>
+    <artifactId>rewrite-maven-plugin</artifactId>
+    <version>6.11.0</version>
+    <configuration>
+        <activeRecipes>
+            <recipe>io.github.mhagnumdw.FormatSqlBlockRecipe</recipe>
+        </activeRecipes>
+        <failOnDryRunResults>false</failOnDryRunResults>
+    </configuration>
+    <dependencies>
+        <dependency>
+            <groupId>io.github.mhagnumdw</groupId>
+            <artifactId>rewrite-format-sql</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+</plugin>
+```
+
+Então executar:
 
 ```bash
-mvn -V clean install
+./mvnw rewrite:run
 ```
 
-> Nesse momento o artefato é instalado no `~/.m2` come esse GAV: `io.github.mhagnumdw:rewrite-format-sql:1.0-SNAPSHOT`
+Para personalizar a configuração do Recipe, é necessário ter o arquivo `rewrite.yml` na raiz do projeto. Exemplo:
 
-Agora vamos supor que queremos aplicar esse Recipe a classe `io.github.mhagnumdw.FooBar` existente em um projeto qualquer. Essa:
-
-```java
-package io.github.mhagnumdw;
-class FooBar {
-
-}
-```
-
-Na raiz do projeto, criar o arquivo `rewrite.yml`:
-
-```yaml
+```yml
 ---
 type: specs.openrewrite.org/v1beta/recipe
-name: io.github.mhagnumdw.SayHelloRecipeMyConf # um nome único qualquer
+name: io.github.mhagnumdw.FormatSqlBlockRecipe_Configured
 recipeList:
-  - io.github.mhagnumdw.SayHelloRecipe: # o nome completo do Recipe
-      fullyQualifiedClassName: io.github.mhagnumdw.FooBar # que classe o Recipe deve alterar
+  - io.github.mhagnumdw.FormatSqlBlockRecipe:
+      sqlDialect: "plsql"
 ```
 
-> - Mais detalhes sobre esse yaml: <https://docs.openrewrite.org/reference/yaml-format-reference>
-> - Se essa for uma configuração que será executada com frequência, esse arquivo pode ser versionado
-> - Essa configuração também pode ser feito no `pom.xml`, como é mencionada mais abaixo
+> - O atributo `name` é arbitrário. Observar que **não** é o nome do Recipe. O Recipe em si foi definido no atributo `recipeList`.
+> - O arquivo `rewrite.yml` deve ser versionado.
+> - Mais detalhes sobre o `rewrite.yml`, ver [aqui](https://docs.openrewrite.org/reference/yaml-format-reference).
 
-Executar o Recipe:
+E alterar a tag `<recipe>` no `pom.xml` para:
+
+```xml
+<recipe>io.github.mhagnumdw.FormatSqlBlockRecipe_Configured</recipe>
+```
+
+Então executar:
 
 ```bash
-mvn -V org.openrewrite.maven:rewrite-maven-plugin:run \
-  -Drewrite.activeRecipes=io.github.mhagnumdw.SayHelloRecipeMyConf \
+./mvnw rewrite:run
+```
+
+Para mais detalhes sobre a configuração do OpenRewrite com o maven, ver [aqui](https://docs.openrewrite.org/reference/rewrite-maven-plugin).
+
+### Sem adicionar nada ao projeto
+
+Esse modo é indicado se sua intenção é executar esse Recipe uma única vez.
+
+```bash
+./mvnw org.openrewrite.maven:rewrite-maven-plugin:run \
+  -Drewrite.activeRecipes=io.github.mhagnumdw.FormatSqlBlockRecipe \
   -Drewrite.recipeArtifactCoordinates=io.github.mhagnumdw:rewrite-format-sql:1.0-SNAPSHOT
 ```
 
-> Parâmetros:
->
-> - `rewrite.activeRecipes`: é o `name` no arquivo `rewrite.yml` mais acima
-> - `rewrite.recipeArtifactCoordinates`: é o GAV do JAR do Recipe
+Para personalizar a configuração do Recipe, é necessário ter o arquivo `rewrite.yml` na raiz do projeto, **conforme o exemplo anterior**.
 
-Agora a classe `FooBar` terá o método `hello()` adicionado:
+Então executar:
 
-```java
-package io.github.mhagnumdw;
-
-class FooBar {
-    public String hello() {
-        return "Hello from com.yourorg.FooBar!";
-    }
-}
+```bash
+./mvnw org.openrewrite.maven:rewrite-maven-plugin:run \
+  -Drewrite.activeRecipes=io.github.mhagnumdw.FormatSqlBlockRecipe_Configured \
+  -Drewrite.recipeArtifactCoordinates=io.github.mhagnumdw:rewrite-format-sql:1.0-SNAPSHOT
 ```
 
-> O Recipe `io.github.mhagnumdw.SayHelloRecipe` também pode ser definido e configurado no `pom.xml` do projeto. Desse modo, ao executar apenas `mvn -V org.openrewrite.maven:rewrite-maven-plugin:run` ou mais simplesmente `mvn rewrite:run`, todos os Recipes configurados no `pom.xml` serão executados.
+> `io.github.mhagnumdw.FormatSqlBlockRecipe_Configured` é o `name` definido no arquivo `rewrite.yml`.
+
+## Para desenvolvedores
+
+Esse projeto utiliza Java 8 para o source principal e Java 17 para o source do teste. Ao importar no Eclipse como projeto maven, é preciso alterar manualmente para Java 17: clique com o `botão direito no projeto > Build Path > Configure Build Path... > Libraries`, remova o Java 8 e adicione o Java 17 usando o botão `Add Library...`.
+
+Para testar no ambiente real em tempo de desenvolvimento, basta instalar o JAR e fazer referência para a versão SNAPSHOT:
+
+```bash
+./mvnw -V install
+```
+
+> O artefato é instalado no `~/.m2` com o GAV: `io.github.mhagnumdw:rewrite-format-sql:XXX-SNAPSHOT`
+
+Para executar os testes automatizados:
+
+```bash
+./mvnw test
+```
+
+Cobertura de testes disponível em `target/site/jacoco/index.html`.
+
+O projeto foi criado inicialmente seguindo os guias oficiais:
+
+- <https://docs.openrewrite.org/authoring-recipes/recipe-development-environment>
+- <https://docs.openrewrite.org/authoring-recipes/writing-a-java-refactoring-recipe>
