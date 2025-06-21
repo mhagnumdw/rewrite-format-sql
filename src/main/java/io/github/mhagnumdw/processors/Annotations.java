@@ -1,9 +1,9 @@
 package io.github.mhagnumdw.processors;
 
+import lombok.Getter;
+
 import java.util.Arrays;
 import java.util.Optional;
-
-import lombok.Getter;
 
 /**
  * This enum defines the different annotation processors available for handling SQL/HQL annotations.

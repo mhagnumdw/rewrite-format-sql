@@ -148,6 +148,45 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.openrewrite.maven</groupId>
+                <artifactId>rewrite-maven-plugin</artifactId>
+                <version>6.11.0</version>
+                <configuration>
+                    <exportDatatables>true</exportDatatables>
+                    <activeRecipes>
+                        <!-- https://docs.openrewrite.org/recipes/recipes/rewrite/openrewriterecipebestpractices -->
+                        <recipe>org.openrewrite.recipes.rewrite.OpenRewriteRecipeBestPractices</recipe>
+                        <!-- https://docs.openrewrite.org/recipes/java/recipes -->
+                        <recipe>org.openrewrite.java.recipes.JavaRecipeBestPractices</recipe>
+                        <recipe>org.openrewrite.java.recipes.RecipeNullabilityBestPractices</recipe>
+                        <recipe>org.openrewrite.java.recipes.RecipeTestingBestPractices</recipe>
+                        <recipe>org.openrewrite.java.recipes.CorrectlySpacedDescriptions</recipe>
+                        <recipe>org.openrewrite.java.recipes.SourceSpecTextBlockNewLine</recipe>
+                        <recipe>org.openrewrite.java.recipes.UseTreeRandomId</recipe>
+                        <recipe>org.openrewrite.java.recipes.ExecutionContextParameterName</recipe>
+                        <recipe>org.openrewrite.java.format.RemoveTrailingWhitespace</recipe>
+                        <!-- Maven -->
+                        <recipe>org.openrewrite.maven.BestPractices</recipe>
+                        <recipe>org.openrewrite.maven.RemoveUnusedProperties</recipe>
+                    </activeRecipes>
+                    <failOnDryRunResults>true</failOnDryRunResults> <!-- Default is false -->
+                    <exclusions>
+                        <exclusion>src/test/java/jakarta/data/repository/Query.java</exclusion>
+                        <exclusion>src/test/java/org/hibernate/annotations/processing/HQL.java</exclusion>
+                        <exclusion>src/test/java/org/hibernate/annotations/processing/SQL.java</exclusion>
+                    </exclusions>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.openrewrite.recipe</groupId>
+                        <artifactId>rewrite-rewrite</artifactId>
+                        <version>0.7.0</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
         </plugins>
     </build>
 

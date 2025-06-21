@@ -2,9 +2,6 @@ package io.github.mhagnumdw.processors;
 
 import static org.openrewrite.Tree.randomId;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.openrewrite.Cursor;
 import org.openrewrite.java.style.IntelliJ;
 import org.openrewrite.java.style.TabsAndIndentsStyle;
@@ -20,6 +17,9 @@ import org.openrewrite.style.Style;
 import com.github.vertical_blank.sqlformatter.SqlFormatter;
 import com.github.vertical_blank.sqlformatter.core.FormatConfig;
 import com.github.vertical_blank.sqlformatter.languages.Dialect;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * This abstract class provides a common tasks for processing annotations that contain an annotation with single SQL/HQL

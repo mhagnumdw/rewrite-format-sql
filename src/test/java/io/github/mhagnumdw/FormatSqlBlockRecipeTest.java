@@ -4,15 +4,16 @@ import static org.openrewrite.Tree.randomId;
 import static org.openrewrite.java.Assertions.java;
 import static org.openrewrite.java.Assertions.javaVersion;
 
-import java.util.Collections;
-
-import org.junit.jupiter.api.Test;
 import org.openrewrite.DocumentExample;
 import org.openrewrite.java.style.IntelliJ;
 import org.openrewrite.java.style.TabsAndIndentsStyle;
 import org.openrewrite.style.NamedStyles;
 import org.openrewrite.test.RecipeSpec;
 import org.openrewrite.test.RewriteTest;
+
+import org.junit.jupiter.api.Test;
+
+import java.util.Collections;
 
 @SuppressWarnings("java:S2699")
 class FormatSqlBlockRecipeTest implements RewriteTest {

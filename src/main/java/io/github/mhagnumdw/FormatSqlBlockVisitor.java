@@ -7,7 +7,6 @@ import org.openrewrite.java.tree.JavaType;
 
 import com.github.vertical_blank.sqlformatter.core.FormatConfig;
 import com.github.vertical_blank.sqlformatter.languages.Dialect;
-
 import io.github.mhagnumdw.processors.Annotations;
 
 public class FormatSqlBlockVisitor extends JavaIsoVisitor<ExecutionContext> {
