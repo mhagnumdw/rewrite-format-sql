@@ -161,6 +161,7 @@ Então executar:
 ```
 
 > `io.github.mhagnumdw.FormatSqlBlockRecipe_Configured` é o `name` definido no arquivo `rewrite.yml`.
+> Para uma única Recipe nem é necessário ter o arquivo `rewrite.yml` para personalizar a configuração, ver [aqui](https://docs.openrewrite.org/reference/faq#is-it-possible-to-pass-arguments-to-a-recipe-from-the-command-line).
 
 ## Para desenvolvedores
 
