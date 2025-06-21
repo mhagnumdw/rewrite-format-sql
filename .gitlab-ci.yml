@@ -1,5 +1,5 @@
 .cache:
-  - &global_m2_cache
+  &global_m2_cache
     key: "global_m2_cache"
     paths:
     - .m2/repository
@@ -16,6 +16,7 @@ default:
 
 stages:
   - build
+  - checks
 
 # determina se o pipeline deve ser criado ou nao
 workflow:
@@ -52,13 +53,11 @@ variables:
 
 .common:
   .maven:
-    - &maven_download_settings
+    &maven_download_settings
       - curl -o $MAVEN_LOCAL_SETTINGS $MAVEN_REMOTE_SETTINGS || wget -O $MAVEN_LOCAL_SETTINGS $MAVEN_REMOTE_SETTINGS
 
 before_script:
   - set -x
-
-########## BUILD ###################################
 
 compile:
   stage: build
@@ -79,3 +78,13 @@ compile:
     - echo "Resultado da cobertura de código:"
     - |
       awk -F"," '{ instructions+=$4+$5+$6+$7+$8+$9+$10+$11+$12+$13; covered+=$5+$7+$9+$11+$13 } END { printf "Jacoco Coverage Total: %.5f%%\n", 100*covered/instructions }' ${MAVEN_JACOCO_REPORT_CSV}
+
+openrewrite:
+  stage: checks
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - target
+  script:
+    - *maven_download_settings
+    - $MVN_CMD $MAVEN_CLI_OPTS rewrite:dryRun -DfailOnDryRunResults=true

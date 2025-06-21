@@ -183,6 +183,15 @@ Para executar os testes automatizados:
 
 Cobertura de testes disponível em `target/site/jacoco/index.html`.
 
+Para executar a formatação de código automática:
+
+```bash
+# formatar (CUIDADO, pois o código será modificado!)
+./mvnw rewrite:run
+# apenas validar
+./mvnw rewrite:dryRun
+```
+
 O projeto foi criado inicialmente seguindo os guias oficiais:
 
 - <https://docs.openrewrite.org/authoring-recipes/recipe-development-environment>
