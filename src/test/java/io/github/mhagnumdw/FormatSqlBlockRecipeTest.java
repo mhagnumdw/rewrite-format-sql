@@ -38,7 +38,7 @@ class FormatSqlBlockRecipeTest implements RewriteTest {
     // There is a small spacing issue with aliases reported here https://github.com/vertical-blank/sql-formatter/issues/77
     @DocumentExample
     @Test
-    void formarSqlBlock_simpleExample() {
+    void shouldFormatSimpleSqlBlock() {
         rewriteRun(
             java(
                 """
@@ -80,7 +80,7 @@ class FormatSqlBlockRecipeTest implements RewriteTest {
     }
 
     @Test
-    void formarSqlBlock_withHQLAnnotation() {
+    void shouldFormatSqlBlockInHqlAnnotation() {
         rewriteRun(
             java(
                 """
@@ -144,7 +144,7 @@ class FormatSqlBlockRecipeTest implements RewriteTest {
     }
 
     @Test
-    void formarSqlBlock_withTabs() {
+    void shouldFormatSqlBlockWithTabs() {
         TabsAndIndentsStyle tabsStyle = IntelliJ.tabsAndIndents().withUseTabCharacter(true);
 
         NamedStyles tabsNamedStyle = new NamedStyles(
@@ -232,7 +232,7 @@ class FormatSqlBlockRecipeTest implements RewriteTest {
     }
 
     @Test
-    void formarSqlBlock_withQueryAnnotation() {
+    void shouldFormatSqlBlockInQueryAnnotation() {
         rewriteRun(
             java(
                 """
@@ -275,7 +275,7 @@ class FormatSqlBlockRecipeTest implements RewriteTest {
     }
 
     @Test
-    void formarSqlBlock_withSQLAnnotation() {
+    void shouldFormatSqlBlockInSqlAnnotation() {
         rewriteRun(
             java(
                 """
@@ -319,7 +319,7 @@ class FormatSqlBlockRecipeTest implements RewriteTest {
 
     // Should only change TextBlock
     @Test
-    void formarSqlBlock_doesNotChangeAnything() {
+    void shouldNotChangeNonTextBlockStrings() {
         rewriteRun(
             java(
                 """
@@ -355,7 +355,7 @@ class FormatSqlBlockRecipeTest implements RewriteTest {
     }
 
     @Test
-    void formarSqlBlock_doesNotChangeIndentationOfInitialThreeDoubleQuotes() {
+    void shouldPreserveTextBlockIndentation() {
         rewriteRun(
             java(
                 """
@@ -412,7 +412,7 @@ class FormatSqlBlockRecipeTest implements RewriteTest {
 
     // Should not change anything, as this class's path was not specified for analysis
     @Test
-    void doesNotChangeOtherClasses() {
+    void shouldNotChangeUnrelatedClasses() {
         rewriteRun(
             java(
                 """
@@ -440,7 +440,7 @@ class FormatSqlBlockRecipeTest implements RewriteTest {
     }
 
     @Test
-    void doesNotChangeUnknownAnnotations() {
+    void shouldNotChangeUnsupportedAnnotations() {
         rewriteRun(
             java(
                 """
