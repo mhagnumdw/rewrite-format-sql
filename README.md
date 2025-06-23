@@ -31,7 +31,7 @@ Engine de formatação: [com.github.vertical-blank:sql-formatter](https://github
 
 | Tipo    | Nome              | Descrição                                                                                                                                                                                           | Exemplo  |
 | :------ | :---------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------  | :------- |
-| String  | `classFilePath`   | Opcional. O caminho para os arquivos Java que o Recipe deve processar. Aceita uma glob expression, with a multiple patterns may be specified, separated by a semicolon `;`. Defaults to `**/*.java`.| `**/*Repository.java` |
+| String  | `filePath`   | Opcional. O caminho para os arquivos Java que o Recipe deve processar. Aceita uma glob expression, with a multiple patterns may be specified, separated by a semicolon `;`. Defaults to `**/*.java`.| `**/*Repository.java` |
 | String  | `sqlDialect`      | Opcional. The dialect to use for formatting. Opções válidas: `sql` (StandardSql), `mysql`, `postgresql`, `db2`, `plsql` (Oracle PL/SQL), `n1ql` (Couchbase N1QL), `redshift`, `spark`, `tsql` (SQL Server Transact-SQL). Detalhes [aqui](https://github.com/vertical-blank/sql-formatter). Defaults to `sql`. | `plsql` |
 | String  | `indent`          | Opcional. A string a ser usada para indentação. Defaults to 4 spaces. | `"    "` para quatro espaços, `"\t"` para um tab |
 | Integer | `maxColumnLength` | Opcional. O comprimento máximo de uma linha antes que o formatador tente quebrá-la.Defaults to `120`. | `100` |
