@@ -23,7 +23,7 @@ import lombok.Value;
 @EqualsAndHashCode(callSuper = false)
 public class FormatSqlBlockRecipe extends Recipe {
 
-    private static final String DEFAULT_CLASS_FILE_PATH = "**/*.java";
+    private static final String DEFAULT_FILE_PATH = "**/*.java";
 
     private static final Dialect DEFAULT_DIALECT = Dialect.StandardSql;
     private static final String DEFAULT_DIALECT_ALIAS = "sql"; // according DEFAULT_DIALECT
@@ -37,11 +37,11 @@ public class FormatSqlBlockRecipe extends Recipe {
         description = "A glob expression representing a file path to search for (relative to the project root). Blank/null matches all." +
                         "Multiple patterns may be specified, separated by a semicolon `;`. " +
                         "If multiple patterns are supplied any of the patterns matching will be interpreted as a match. " +
-                        "Defaults to " + DEFAULT_CLASS_FILE_PATH + ".",
+                        "Defaults to " + DEFAULT_FILE_PATH + ".",
         required = false,
         example = "src/main/java/com/mycompany/Foo.java")
     @Nullable
-    String classFilePath;
+    String filePath;
 
     @Option(
         displayName = "SQL Dialect",
@@ -77,12 +77,12 @@ public class FormatSqlBlockRecipe extends Recipe {
     Boolean uppercase;
 
     @JsonCreator
-    public FormatSqlBlockRecipe(@Nullable @JsonProperty("classFilePath") String classFilePath,
+    public FormatSqlBlockRecipe(@Nullable @JsonProperty("filePath") String filePath,
                                 @Nullable @JsonProperty("sqlDialect") String sqlDialect,
                                 @Nullable @JsonProperty("indent") String indent,
                                 @Nullable @JsonProperty("maxColumnLength") Integer maxColumnLength,
                                 @Nullable @JsonProperty("uppercase") Boolean uppercase) {
-        this.classFilePath = classFilePath;
+        this.filePath = filePath;
         this.sqlDialect = sqlDialect;
         this.indent = indent;
         this.maxColumnLength = maxColumnLength;
@@ -108,7 +108,7 @@ public class FormatSqlBlockRecipe extends Recipe {
             .uppercase(uppercase == null ? DEFAULT_UPPERCASE : uppercase)
             .build();
         TreeVisitor<?, ExecutionContext> check = Preconditions.and(
-            new FindSourceFiles(classFilePath == null ? DEFAULT_CLASS_FILE_PATH : classFilePath).getVisitor(),
+            new FindSourceFiles(filePath == null ? DEFAULT_FILE_PATH : filePath).getVisitor(),
             new UsesJavaVersion<>(13) // Text blocks were introduced as a preview feature in Java 13 and became a standard feature in Java 15
         );
         return Preconditions.check(check, new FormatSqlBlockVisitor(dialect, formatConfig));
