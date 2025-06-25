@@ -14,12 +14,12 @@ import org.openrewrite.java.tree.TypeUtils;
 import org.openrewrite.marker.Markers;
 import org.openrewrite.style.Style;
 
+import java.util.Collections;
+import java.util.List;
+
 import com.github.vertical_blank.sqlformatter.SqlFormatter;
 import com.github.vertical_blank.sqlformatter.core.FormatConfig;
 import com.github.vertical_blank.sqlformatter.languages.Dialect;
-
-import java.util.Collections;
-import java.util.List;
 
 /**
  * This abstract class provides a common tasks for processing annotations that contain an annotation with single SQL/HQL

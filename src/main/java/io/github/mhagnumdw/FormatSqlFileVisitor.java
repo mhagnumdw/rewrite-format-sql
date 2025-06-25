@@ -7,11 +7,11 @@ import org.openrewrite.Tree;
 import org.openrewrite.TreeVisitor;
 import org.openrewrite.text.PlainText;
 
+import java.util.Objects;
+
 import com.github.vertical_blank.sqlformatter.SqlFormatter;
 import com.github.vertical_blank.sqlformatter.core.FormatConfig;
 import com.github.vertical_blank.sqlformatter.languages.Dialect;
-
-import java.util.Objects;
 
 public class FormatSqlFileVisitor extends TreeVisitor<Tree, ExecutionContext> {
 
