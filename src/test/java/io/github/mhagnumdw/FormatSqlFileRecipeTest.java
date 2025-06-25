@@ -3,11 +3,10 @@ package io.github.mhagnumdw;
 import static org.openrewrite.test.SourceSpecs.other;
 import static org.openrewrite.test.SourceSpecs.text;
 
+import org.junit.jupiter.api.Test;
 import org.openrewrite.DocumentExample;
 import org.openrewrite.test.RecipeSpec;
 import org.openrewrite.test.RewriteTest;
-
-import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("java:S2699")
 class FormatSqlFileRecipeTest implements RewriteTest {
