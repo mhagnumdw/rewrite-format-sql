@@ -9,7 +9,23 @@
     <version>1.0-SNAPSHOT</version>
 
     <name>rewrite-format-sql</name>
-    <url>https://git.sefin.fortaleza.ce.gov.br/dwouglas/rewrite-format-sql</url>
+    <description>An OpenRewrite recipe to format SQL/HQL code blocks in Java code and SQL files</description>
+    <url>https://github.com/mhagnumdw/rewrite-format-sql</url>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/license/mit</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:https://github.com/mhagnumdw/rewrite-format-sql.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:mhagnumdw/rewrite-format-sql.git</developerConnection>
+        <url>https://github.com/mhagnumdw/rewrite-format-sql</url>
+        <tag>HEAD</tag>
+    </scm>
 
     <properties>
         <maven.compiler.release>8</maven.compiler.release>
