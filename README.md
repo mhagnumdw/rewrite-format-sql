@@ -218,34 +218,4 @@ Then run:
 
 ## For Developers
 
-This project uses Java 8 for the main source and Java 17 for the test source. When importing into Eclipse as a Maven project, you need to manually change to Java 17: `right-click on the project > Build Path > Configure Build Path... > Libraries`, remove Java 8 and add Java 17 using the `Add Library...` button.
-
-To test in the real environment during development, just install the JAR and reference the SNAPSHOT version:
-
-```bash
-./mvnw -V install
-```
-
-> The artifact is installed in `~/.m2` with the GAV: `io.github.mhagnumdw:rewrite-format-sql:XXX-SNAPSHOT`
-
-To run automated tests:
-
-```bash
-./mvnw test
-```
-
-Test coverage available at `target/site/jacoco/index.html`.
-
-To run automatic code formatting:
-
-```bash
-# format (CAUTION, as the code will be modified!)
-./mvnw rewrite:run
-# just validate
-./mvnw rewrite:dryRun
-```
-
-The project was initially created following the official guides:
-
-- <https://docs.openrewrite.org/authoring-recipes/recipe-development-environment>
-- <https://docs.openrewrite.org/authoring-recipes/writing-a-java-refactoring-recipe>
+For details on how to contribute, set up the development environment, run tests, and other development-related information, please see our [CONTRIBUTING.md](CONTRIBUTING.md) file.
