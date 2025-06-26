@@ -3,55 +3,55 @@
 [![pipeline status](https://git.meugit.com.br/dwouglas/rewrite-format-sql/badges/main/pipeline.svg)](https://git.meugit.com.br/dwouglas/rewrite-format-sql/commits/main)
 [![coverage report](https://git.meugit.com.br/dwouglas/rewrite-format-sql/badges/main/coverage.svg)](https://git.meugit.com.br/dwouglas/rewrite-format-sql)
 
-Um conjunto de recipes do [OpenRewrite](https://docs.openrewrite.org/) para formatar código SQL/HQL.
+A set of [OpenRewrite](https://docs.openrewrite.org/) recipes for formatting SQL/HQL code.
 
 - [Recipes](#recipes)
   - [FormatSqlBlockRecipe](#formatsqlblockrecipe)
   - [FormatSqlFileRecipe](#formatsqlfilerecipe)
-- [Opções Configuráveis](#opções-configuráveis)
-- [Exemplos](#exemplos)
-  - [Exemplo FormatSqlBlockRecipe](#exemplo-formatsqlblockrecipe)
-  - [Exemplo FormatSqlFileRecipe](#exemplo-formatsqlfilerecipe)
-- [Fazendo Uso](#fazendo-uso)
-  - [Configurando no `pom.xml`](#configurando-no-pomxml)
-  - [Sem adicionar nada ao projeto](#sem-adicionar-nada-ao-projeto)
-- [Para desenvolvedores](#para-desenvolvedores)
+- [Configurable Options](#configurable-options)
+- [Examples](#examples)
+  - [FormatSqlBlockRecipe Example](#formatsqlblockrecipe-example)
+  - [FormatSqlFileRecipe Example](#formatsqlfilerecipe-example)
+- [Usage](#usage)
+  - [Configuring in `pom.xml`](#configuring-in-pomxml)
+  - [Without adding anything to the project](#without-adding-anything-to-the-project)
+- [For Developers](#for-developers)
 
 ## Recipes
 
-A seguir, uma descrição detalhada de cada Recipe.
+Below is a detailed description of each Recipe.
 
 ### FormatSqlBlockRecipe
 
-O recipe `io.github.mhagnumdw.FormatSqlBlockRecipe` formata automaticamente SQL ou HQL embutidos em [Text Blocks](https://docs.oracle.com/en/java/javase/13/text_blocks/index.html) presentes nas seguintes anotações:
+The `io.github.mhagnumdw.FormatSqlBlockRecipe` recipe automatically formats SQL or HQL embedded in [Text Blocks](https://docs.oracle.com/en/java/javase/13/text_blocks/index.html) present in the following annotations:
 
 - `org.hibernate.annotations.processing.HQL`
 - `org.hibernate.annotations.processing.SQL`
 - `jakarta.data.repository.Query`
 
-> Melhorias futuras podem permitir a configuração de anotações personalizadas. Por favor, abra uma solicitação.
+> Future enhancements may allow configuration of custom annotations. Please open an issue.
 
 ### FormatSqlFileRecipe
 
-O recipe `io.github.mhagnumdw.FormatSqlFileRecipe` formata automaticamente o conteúdo de arquivos SQL.
+The `io.github.mhagnumdw.FormatSqlFileRecipe` recipe automatically formats the content of SQL files.
 
-## Opções Configuráveis
+## Configurable Options
 
-As seguintes opções são aplicáveis a ambos os Recipes `FormatSqlBlockRecipe` e `FormatSqlFileRecipe`:
+The following options are applicable to both `FormatSqlBlockRecipe` and `FormatSqlFileRecipe`:
 
-| Tipo    | Nome              | Descrição                                                                                                                                                                                           | Exemplo  | Valor Padrão |
+| Type    | Name              | Description                                                                                                                                                                                           | Example  | Default Value |
 | :------ | :---------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------  | :------- | :------------------------- |
-| String  | `filePath`        | Opcional. O caminho para os arquivos que o Recipe deve processar. Aceita uma glob expression; múltiplos padrões podem ser especificados, separados por ponto e vírgula `;`. Se omitido, processa todos os arquivos correspondentes. | `**/*Repository.java` <br> `**/*.sql` | FormatSqlBlockRecipe: `**/*.java` <br> FormatSqlFileRecipe: `**/*.sql` |
-| String  | `sqlDialect`      | Opcional. O dialeto SQL a ser usado para formatação. Opções válidas: `sql` (StandardSql), `mysql`, `postgresql`, `db2`, `plsql` (Oracle PL/SQL), `n1ql` (Couchbase N1QL), `redshift`, `spark`, `tsql` (SQL Server Transact-SQL). Detalhes [aqui](https://github.com/vertical-blank/sql-formatter). | `plsql`  | `sql` |
-| String  | `indent`          | Opcional. A string a ser usada para indentação.                                                                                                                                                     | `"  "` para 2 espaços <br> `"\t"` para um tab | 4 espaços `"    "` |
-| Integer | `maxColumnLength` | Opcional. O comprimento máximo de uma linha antes que o formatador tente quebrá-la.                                                                                                              | `100`    | `120` |
-| Boolean | `uppercase`       | Opcional. Se deve converter palavras-chave SQL para maiúsculas (não é seguro usar quando o dialeto SQL tem identificadores sensíveis a maiúsculas/minúsculas).                                        | `true`   | `false` |
+| String  | `filePath`        | Optional. The path to the files that the Recipe should process. Accepts a glob expression; multiple patterns can be specified, separated by a semicolon `;`. If omitted, processes all matching files. | `**/*DAO.java` <br> `**/*.sql` | FormatSqlBlockRecipe: `**/*.java` <br> FormatSqlFileRecipe: `**/*.sql` |
+| String  | `sqlDialect`      | Optional. The SQL dialect to be used for formatting. Valid options: `sql` (StandardSql), `mysql`, `postgresql`, `db2`, `plsql` (Oracle PL/SQL), `n1ql` (Couchbase N1QL), `redshift`, `spark`, `tsql` (SQL Server Transact-SQL). Details [here](https://github.com/vertical-blank/sql-formatter). | `plsql`  | `sql` |
+| String  | `indent`          | Optional. The string to be used for indentation.                                                                                                                                                     | `"  "` for 2 spaces <br> `"\t"` for a tab | 4 spaces `"    "` |
+| Integer | `maxColumnLength` | Optional. The maximum length of a line before the formatter tries to break it.                                                                                                              | `100`    | `120` |
+| Boolean | `uppercase`       | Optional. Whether to convert SQL keywords to uppercase (not safe to use when the SQL dialect has case-sensitive identifiers).                                        | `true`   | `false` |
 
-## Exemplos
+## Examples
 
-### Exemplo FormatSqlBlockRecipe
+### FormatSqlBlockRecipe Example
 
-Antes
+Before
 
 ```java
 package com.mycompany;
@@ -60,12 +60,12 @@ import jakarta.data.repository.Query;
 
 public interface HolidayRepository {
     @Query("""
-        select h.*, c.name as country_name from Holiday h inner join Country c on h.country_id = c.id where h.year = :year and h.name != 'xpto' order by h.name""")
+        select h.*, c.name as country_name from Holiday h inner join Country c on h.country_id = c.id where h.year = :year and h.name != 'Christmas' order by h.name""")
     void findByYear(int year);
 }
 ```
 
-Depois
+After
 
 ```java
 package com.mycompany;
@@ -82,16 +82,16 @@ public interface HolidayRepository {
             inner join Country c on h.country_id = c .id
         where
             h.year = :year
-            and h.name != 'xpto'
+            and h.name != 'Christmas'
         order by
             h.name""")
     void findByYear(int year);
 }
 ```
 
-### Exemplo FormatSqlFileRecipe
+### FormatSqlFileRecipe Example
 
-Considere o seguinte arquivo `example.sql`:
+Consider the following `example.sql` file:
 
 ```sql
 select * from users where id = 1;
@@ -99,7 +99,7 @@ select * from users where id = 1;
 select d.name, c.name from City c inner join Department d on c.id = d.city_id;
 ```
 
-Depois da execução do recipe, o arquivo `example.sql` será:
+After running the recipe, the `example.sql` file will be:
 
 ```sql
 select
@@ -117,17 +117,17 @@ from
     inner join Department d on c .id = d.city_id;
 ```
 
-> Existe uma issue aberta sobre o espaço em alguns alias: <https://github.com/vertical-blank/sql-formatter/issues/77>
+> There is an open issue regarding the space in some aliases: <https://github.com/vertical-blank/sql-formatter/issues/77>
 
-## Fazendo Uso
+## Usage
 
-Abaixo são descritos os modos de uso. É possível aplicar um ou ambos os Recipes.
+The usage modes are described below. It is possible to apply one or both Recipes.
 
-### Configurando no `pom.xml`
+### Configuring in `pom.xml`
 
-Se você tem um projeto e vai executar o recipe regularmente, essa é a forma recomenda.
+If you have a project and will run the recipe regularly, this is the recommended way.
 
-Dentro da seção de plugins, adicionar:
+Inside the plugins section, add:
 
 ```xml
 <plugin>
@@ -136,7 +136,7 @@ Dentro da seção de plugins, adicionar:
     <version>6.11.0</version>
     <configuration>
         <activeRecipes>
-            <!-- Aqui os recipes que deseja usar -->
+            <!-- Add the recipes you want to use here -->
             <recipe>io.github.mhagnumdw.FormatSqlBlockRecipe</recipe>
             <recipe>io.github.mhagnumdw.FormatSqlFileRecipe</recipe>
         </activeRecipes>
@@ -152,50 +152,50 @@ Dentro da seção de plugins, adicionar:
 </plugin>
 ```
 
-Então executar:
+Then run:
 
 ```bash
 ./mvnw rewrite:run
 ```
 
-Para personalizar a configuração do recipe, é necessário ter o arquivo `rewrite.yml` na raiz do projeto. Exemplo:
+To customize the recipe configuration, you need to have a `rewrite.yml` file in the project root. Example:
 
 ```yml
 ---
 type: specs.openrewrite.org/v1beta/recipe
 name: io.github.mhagnumdw.FormatSqlCustomConfig
 recipeList:
-  # Aqui as Recipes que deseja usar
+  # Add the Recipes you want to use here
   - io.github.mhagnumdw.FormatSqlBlockRecipe:
       sqlDialect: "plsql"
   - io.github.mhagnumdw.FormatSqlFileRecipe:
       sqlDialect: "mysql"
 ```
 
-> - Esse arquivo é uma forma de criar uma recipe sua customizada a partir de outras recipes.
-> - O atributo `name` é arbitrário, mas é bom que ele remeta ao seu propósito. É o nome da recipe customizada.
-> - O arquivo `rewrite.yml` deve ser versionado.
-> - Para mais detalhes sobre o `rewrite.yml`, ver [aqui](https://docs.openrewrite.org/reference/yaml-format-reference).
+> - This file is a way to create your own custom recipe from other recipes.
+> - The `name` attribute is arbitrary, but it's good if it relates to its purpose. It's the name of the custom recipe.
+> - The `rewrite.yml` file should be versioned.
+> - For more details about `rewrite.yml`, see [here](https://docs.openrewrite.org/reference/yaml-format-reference).
 
-E alterar a tag `<recipe>` no `pom.xml` para:
+And change the `<recipe>` tag in `pom.xml` to:
 
 ```xml
 <recipe>io.github.mhagnumdw.FormatSqlCustomConfig</recipe>
 ```
 
-> Como nesse exemplo a recipe `FormatSqlCustomConfig` engloba as duas recipes `FormatSqlBlockRecipe` e `FormatSqlFileRecipe`, no `pom.xml` só é necessário definir a recipe `FormatSqlCustomConfig`.
+> As in this example the `FormatSqlCustomConfig` recipe includes both `FormatSqlBlockRecipe` and `FormatSqlFileRecipe` recipes, in `pom.xml` it is only necessary to define the `FormatSqlCustomConfig` recipe.
 
-Então executar:
+Then run:
 
 ```bash
 ./mvnw rewrite:run
 ```
 
-Para mais detalhes sobre a configuração do OpenRewrite com o maven, ver [aqui](https://docs.openrewrite.org/reference/rewrite-maven-plugin).
+For more details on configuring OpenRewrite with Maven, see [here](https://docs.openrewrite.org/reference/rewrite-maven-plugin).
 
-### Sem adicionar nada ao projeto
+### Without adding anything to the project
 
-Esse modo é indicado se sua intenção é executar a recipe uma única vez.
+This mode is indicated if your intention is to run the recipe only once.
 
 ```bash
 ./mvnw org.openrewrite.maven:rewrite-maven-plugin:run \
@@ -203,9 +203,9 @@ Esse modo é indicado se sua intenção é executar a recipe uma única vez.
   -Drewrite.recipeArtifactCoordinates=io.github.mhagnumdw:rewrite-format-sql:1.0-SNAPSHOT
 ```
 
-Para personalizar a configuração da recipe, é necessário ter o arquivo `rewrite.yml` na raiz do projeto, **conforme o exemplo anterior**.
+To customize the recipe configuration, you need to have the `rewrite.yml` file in the project root, **as in the previous example**.
 
-Então executar:
+Then run:
 
 ```bash
 ./mvnw org.openrewrite.maven:rewrite-maven-plugin:run \
@@ -213,39 +213,39 @@ Então executar:
   -Drewrite.recipeArtifactCoordinates=io.github.mhagnumdw:rewrite-format-sql:1.0-SNAPSHOT
 ```
 
-> - `io.github.mhagnumdw.FormatSqlCustomConfig` é o `name` definido no arquivo `rewrite.yml`.
-> - Para uma única recipe nem é necessário ter o arquivo `rewrite.yml` para personalizar a configuração, ver [aqui](https://docs.openrewrite.org/reference/faq#is-it-possible-to-pass-arguments-to-a-recipe-from-the-command-line).
+> - `io.github.mhagnumdw.FormatSqlCustomConfig` is the `name` defined in the `rewrite.yml` file.
+> - For a single recipe, you don't even need to have the `rewrite.yml` file to customize the configuration, see [here](https://docs.openrewrite.org/reference/faq#is-it-possible-to-pass-arguments-to-a-recipe-from-the-command-line).
 
-## Para desenvolvedores
+## For Developers
 
-Esse projeto utiliza Java 8 para o source principal e Java 17 para o source do teste. Ao importar no Eclipse como projeto maven, é preciso alterar manualmente para Java 17: clique com o `botão direito no projeto > Build Path > Configure Build Path... > Libraries`, remova o Java 8 e adicione o Java 17 usando o botão `Add Library...`.
+This project uses Java 8 for the main source and Java 17 for the test source. When importing into Eclipse as a Maven project, you need to manually change to Java 17: `right-click on the project > Build Path > Configure Build Path... > Libraries`, remove Java 8 and add Java 17 using the `Add Library...` button.
 
-Para testar no ambiente real em tempo de desenvolvimento, basta instalar o JAR e fazer referência para a versão SNAPSHOT:
+To test in the real environment during development, just install the JAR and reference the SNAPSHOT version:
 
 ```bash
 ./mvnw -V install
 ```
 
-> O artefato é instalado no `~/.m2` com o GAV: `io.github.mhagnumdw:rewrite-format-sql:XXX-SNAPSHOT`
+> The artifact is installed in `~/.m2` with the GAV: `io.github.mhagnumdw:rewrite-format-sql:XXX-SNAPSHOT`
 
-Para executar os testes automatizados:
+To run automated tests:
 
 ```bash
 ./mvnw test
 ```
 
-Cobertura de testes disponível em `target/site/jacoco/index.html`.
+Test coverage available at `target/site/jacoco/index.html`.
 
-Para executar a formatação de código automática:
+To run automatic code formatting:
 
 ```bash
-# formatar (CUIDADO, pois o código será modificado!)
+# format (CAUTION, as the code will be modified!)
 ./mvnw rewrite:run
-# apenas validar
+# just validate
 ./mvnw rewrite:dryRun
 ```
 
-O projeto foi criado inicialmente seguindo os guias oficiais:
+The project was initially created following the official guides:
 
 - <https://docs.openrewrite.org/authoring-recipes/recipe-development-environment>
 - <https://docs.openrewrite.org/authoring-recipes/writing-a-java-refactoring-recipe>

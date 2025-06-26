@@ -18,7 +18,7 @@ examples:
       public interface HolidayRepository {
 
           @HQL("""
-              select h.*, c.name as country_name from Holiday h inner join Country c on h.country_id = c.id where h.year = :year and h.name != 'xpto' order by h.name""")
+              select h.*, c.name as country_name from Holiday h inner join Country c on h.country_id = c.id where h.year = :year and h.name != 'Christmas' order by h.name""")
           void select();
       }
     after: |
@@ -37,7 +37,7 @@ examples:
                   inner join Country c on h.country_id = c .id
               where
                   h.year = :year
-                  and h.name != 'xpto'
+                  and h.name != 'Christmas'
               order by
                   h.name""")
           void select();

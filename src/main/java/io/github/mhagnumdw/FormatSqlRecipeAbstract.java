@@ -13,6 +13,10 @@ import com.github.vertical_blank.sqlformatter.languages.Dialect;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+/**
+ * Abstract base class for SQL formatting recipes.
+ * Provides common configuration options and methods for SQL formatting.
+ */
 @Getter
 @EqualsAndHashCode(callSuper = false)
 abstract class FormatSqlRecipeAbstract extends Recipe {

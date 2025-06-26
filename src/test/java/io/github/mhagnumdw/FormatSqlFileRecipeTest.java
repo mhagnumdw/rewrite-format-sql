@@ -24,7 +24,7 @@ class FormatSqlFileRecipeTest implements RewriteTest {
         );
     }
 
-    // There is a small spacing issue with aliases reported here https://github.com/vertical-blank/sql-formatter/issues/77
+    // There is a small spacing issue with aliases reported at https://github.com/vertical-blank/sql-formatter/issues/77
     @DocumentExample
     @Test
     void shouldFormatSql() {
@@ -106,7 +106,7 @@ class FormatSqlFileRecipeTest implements RewriteTest {
         );
     }
 
-    // Should not change anything, as this file's path was not specified for analysis
+    // Should not change anything, as this file's path was not specified for processing
     @Test
     void shouldNotChangeOtherFiles() {
         rewriteRun(
@@ -117,7 +117,7 @@ class FormatSqlFileRecipeTest implements RewriteTest {
         );
     }
 
-    // This test ensures that a file that is not a PlainText file is not processed
+    // This test ensures that a non-PlainText file is not processed,
     // even if it has a .sql extension.
     @Test
     void shouldNotProcessBinaryFile() {

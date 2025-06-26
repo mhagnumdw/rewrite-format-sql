@@ -57,7 +57,7 @@
             <version>2.0.5</version>
         </dependency>
 
-        <!-- TESTs -->
+        <!-- TESTS -->
         <dependency>
             <groupId>org.openrewrite</groupId>
             <artifactId>rewrite-test</artifactId>
@@ -120,7 +120,6 @@
             </plugin>
             <!--
             JaCoCo: mvn clean test
-            Configurado conforme documentação em:
             https://www.jacoco.org/jacoco/trunk/doc/maven.html
             -->
             <plugin>
