@@ -34,7 +34,7 @@ class FormatSqlBlockRecipeTest implements RewriteTest {
         ));
     }
 
-    // There is a small spacing issue with aliases reported here https://github.com/vertical-blank/sql-formatter/issues/77
+    // There is a small spacing issue with aliases reported at https://github.com/vertical-blank/sql-formatter/issues/77
     @DocumentExample
     @Test
     void shouldFormatSimpleSqlBlock() {
@@ -48,7 +48,7 @@ class FormatSqlBlockRecipeTest implements RewriteTest {
                 public interface HolidayRepository {
 
                     @HQL(\"""
-                        select h.*, c.name as country_name from Holiday h inner join Country c on h.country_id = c.id where h.year = :year and h.name != 'xpto' order by h.name\""")
+                        select h.*, c.name as country_name from Holiday h inner join Country c on h.country_id = c.id where h.year = :year and h.name != 'Christmas' order by h.name\""")
                     void select();
                 }
                 """,
@@ -68,7 +68,7 @@ class FormatSqlBlockRecipeTest implements RewriteTest {
                             inner join Country c on h.country_id = c .id
                         where
                             h.year = :year
-                            and h.name != 'xpto'
+                            and h.name != 'Christmas'
                         order by
                             h.name\""")
                     void select();
@@ -160,13 +160,13 @@ class FormatSqlBlockRecipeTest implements RewriteTest {
                 new FormatSqlBlockRecipe(
                     "io/github/mhagnumdw/fake/holidays/HolidayRepository.java",
                     "plsql",
-                    "\t", // Use tab for indentation sql block
+                    "\t", // Use tab for SQL block indentation
                     null,
                     null
                 )
             ).allSources(s ->
                 // Informing OpenRewrite about the code style, as automatic style
-                // detection doesn't seem to work in tests ?
+                // detection doesn't seem to work in tests?
                 s.markers(tabsNamedStyle)
             ),
             java(
@@ -316,7 +316,7 @@ class FormatSqlBlockRecipeTest implements RewriteTest {
         );
     }
 
-    // Should only change TextBlock
+    // Should only change TextBlocks
     @Test
     void shouldNotChangeNonTextBlockStrings() {
         rewriteRun(
@@ -409,7 +409,7 @@ class FormatSqlBlockRecipeTest implements RewriteTest {
             );
     }
 
-    // Should not change anything, as this class's path was not specified for analysis
+    // Should not change anything, as this class's path was not specified for processing
     @Test
     void shouldNotChangeUnrelatedClasses() {
         rewriteRun(
