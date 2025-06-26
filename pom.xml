@@ -12,6 +12,8 @@
     <url>https://git.sefin.fortaleza.ce.gov.br/dwouglas/rewrite-format-sql</url>
 
     <properties>
+        <maven.compiler.release>8</maven.compiler.release>
+        <maven.compiler.testRelease>17</maven.compiler.testRelease>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -82,10 +84,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.14.0</version>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
-                    <testSource>17</testSource>
-                    <testTarget>17</testTarget>
                     <compilerArgs>
                         <arg>-parameters</arg>
                     </compilerArgs>
@@ -142,7 +140,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.openrewrite.maven</groupId>
                 <artifactId>rewrite-maven-plugin</artifactId>
@@ -188,7 +185,23 @@
                     </dependency>
                 </dependencies>
             </plugin>
-
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.11.2</version>
+                <configuration>
+                    <!-- https://docs.oracle.com/en/java/javase/17/docs/specs/man/javadoc.html#additional-options-provided-by-the-standard-doclet -->
+                    <doclint>all,-missing</doclint>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
