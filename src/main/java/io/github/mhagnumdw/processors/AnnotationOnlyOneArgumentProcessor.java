@@ -3,6 +3,7 @@ package io.github.mhagnumdw.processors;
 import static org.openrewrite.Tree.randomId;
 
 import org.openrewrite.Cursor;
+import org.openrewrite.internal.StringUtils;
 import org.openrewrite.java.style.IntelliJ;
 import org.openrewrite.java.style.TabsAndIndentsStyle;
 import org.openrewrite.java.tree.Expression;
@@ -92,7 +93,7 @@ abstract class AnnotationOnlyOneArgumentProcessor implements AnnotationProcessor
         if (useTab) {
             return "\t";
         }
-        return " ".repeat(tabSize);
+        return StringUtils.repeat(" ", tabSize);
     }
 
     // From: https://github.com/openrewrite/rewrite-migrate-java/blob/main/src/main/java/org/openrewrite/java/migrate/lang/UseTextBlocks.java
