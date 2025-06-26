@@ -20,7 +20,7 @@ To test in the real environment during development, just install the JAR and ref
 ./mvnw -V install
 ```
 
-> The artifact is installed in `~/.m2` with the GAV: `io.github.mhagnumdw:rewrite-format-sql:XXX-SNAPSHOT`
+> The artifact is installed in `~/.m2` with the GAV: `io.github.mhagnumdw:rewrite-format-sql:X.X.X-SNAPSHOT`
 
 To run automated tests:
 

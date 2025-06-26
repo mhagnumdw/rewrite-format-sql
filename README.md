@@ -146,7 +146,7 @@ Inside the plugins section, add:
         <dependency>
             <groupId>io.github.mhagnumdw</groupId>
             <artifactId>rewrite-format-sql</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </plugin>
@@ -200,7 +200,7 @@ This mode is indicated if your intention is to run the recipe only once.
 ```bash
 ./mvnw org.openrewrite.maven:rewrite-maven-plugin:run \
   -Drewrite.activeRecipes=io.github.mhagnumdw.FormatSqlBlockRecipe,io.github.mhagnumdw.FormatSqlFileRecipe \
-  -Drewrite.recipeArtifactCoordinates=io.github.mhagnumdw:rewrite-format-sql:1.0-SNAPSHOT
+  -Drewrite.recipeArtifactCoordinates=io.github.mhagnumdw:rewrite-format-sql:1.0.0-SNAPSHOT
 ```
 
 To customize the recipe configuration, you need to have the `rewrite.yml` file in the project root, **as in the previous example**.
@@ -210,7 +210,7 @@ Then run:
 ```bash
 ./mvnw org.openrewrite.maven:rewrite-maven-plugin:run \
   -Drewrite.activeRecipes=io.github.mhagnumdw.FormatSqlCustomConfig \
-  -Drewrite.recipeArtifactCoordinates=io.github.mhagnumdw:rewrite-format-sql:1.0-SNAPSHOT
+  -Drewrite.recipeArtifactCoordinates=io.github.mhagnumdw:rewrite-format-sql:1.0.0-SNAPSHOT
 ```
 
 > - `io.github.mhagnumdw.FormatSqlCustomConfig` is the `name` defined in the `rewrite.yml` file.
