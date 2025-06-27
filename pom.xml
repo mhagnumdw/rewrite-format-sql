@@ -22,7 +22,7 @@
 
     <scm>
         <connection>scm:git:https://github.com/mhagnumdw/rewrite-format-sql.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com:mhagnumdw/rewrite-format-sql.git</developerConnection>
+        <developerConnection>scm:git:ssh://git@github.com/mhagnumdw/rewrite-format-sql.git</developerConnection>
         <url>https://github.com/mhagnumdw/rewrite-format-sql</url>
         <tag>HEAD</tag>
     </scm>
