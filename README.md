@@ -1,7 +1,7 @@
 # rewrite-format-sql <!-- omit in toc -->
 
 [![ci](https://github.com/mhagnumdw/rewrite-format-sql/actions/workflows/ci.yml/badge.svg)](https://github.com/mhagnumdw/rewrite-format-sql/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/github/mhagnumdw/rewrite-format-sql/graph/badge.svg?token=XXXXXXXX)](https://codecov.io/github/mhagnumdw/rewrite-format-sql)
+[![codecov](https://codecov.io/gh/mhagnumdw/rewrite-format-sql/graph/badge.svg?token=88BB3MW6QA)](https://codecov.io/gh/mhagnumdw/rewrite-format-sql)
 
 A set of [OpenRewrite](https://docs.openrewrite.org/) recipes for formatting SQL/HQL code.
 
