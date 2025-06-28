@@ -20,10 +20,10 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    - name: Build with Maven
+    - name: Build, Test and Coverage
       run: ./mvnw -B clean verify
 
-    - name: Upload coverage to Codecov
+    - name: Codecov Code Coverage
       uses: codecov/codecov-action@v5
       with:
         fail_ci_if_error: true # optional (default = false)
