@@ -276,6 +276,7 @@
                                 </goals>
                                 <configuration>
                                     <keyname>01D542C74EF9112377B3BBD3B1E2D19C51D2D717</keyname>
+                                    <executable>gpg2</executable>
                                 </configuration>
                             </execution>
                         </executions>
