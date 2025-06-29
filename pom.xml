@@ -238,11 +238,14 @@
                 <configuration>
                     <tagNameFormat>v@{project.version}</tagNameFormat>
                     <pushChanges>true</pushChanges>
-                    <scmCommentPrefix>[maven-release-plugin]</scmCommentPrefix>
+                    <!-- <scmCommentPrefix>[maven-release-plugin]</scmCommentPrefix> -->
+                     <scmDevelopmentCommitComment>@{prefix}[ci skip] prepare for next development iteration</scmDevelopmentCommitComment>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <!-- <useReleaseProfile>false</useReleaseProfile>
+                    <releaseProfiles>release</releaseProfiles> -->
                 </configuration>
             </plugin>
-            <plugin>
+            <!-- <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
                 <version>3.2.7</version>
@@ -258,8 +261,45 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin> -->
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.8.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                    <autoPublish>true</autoPublish>
+                    <waitUntil>published</waitUntil>
+                </configuration>
             </plugin>
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>central-release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>3.2.7</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                                <configuration>
+                                    <keyname>01D542C74EF9112377B3BBD3B1E2D19C51D2D717</keyname>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
