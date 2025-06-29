@@ -1,0 +1,61 @@
+name: Release and Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      RELEASE_VERSION:
+        description: 'Release version (e.g., 1.0.0)'
+        required: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        # with:
+        #   # Fetch all history for all tags and branches
+        #   fetch-depth: 0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Setup git user.name and user.email
+        # run: |
+        #   git config user.name "${{ github.actor }}"
+        #   git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
+        run: |
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR_ID}+${GITHUB_ACTOR}@users.noreply.github.com"
+
+      # - name: Import GPG key
+      #   uses: crazy-max/ghaction-import-gpg@v6
+      #   with:
+      #     gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+      #     passphrase: ${{ secrets.GPG_PASSPHRASE }}
+      #     git_user_signingkey: true
+      #     git_commit_gpgsign: true
+
+      - name: Prepare Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # maven-release-plugin needs this to push tags/commits
+        # run: ./mvnw -V -B release:clean release:prepare -DreleaseVersion=${{ github.event.inputs.RELEASE_VERSION }} -DscmCommentPrefix="[maven-release-plugin] [skip ci] "
+        run: ./mvnw -V -B release:clean release:prepare -DreleaseVersion=${{ inputs.RELEASE_VERSION }}
+
+      - name: Publish to Maven Central
+        env:
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+        # run: ./mvnw -V -B deploy -DskipTests -Pcentral-release --settings .mvn/settings.xml
+        run: ./mvnw -V -B deploy -Pcentral-release --settings .mvn/settings.xml
+        # We use a custom settings.xml for release to specify the OSSRH server credentials
+        # The profile central-release should be defined in pom.xml to activate gpg signing for release builds if not active by default
+
+      # - name: Push changes to main
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: git push origin main
