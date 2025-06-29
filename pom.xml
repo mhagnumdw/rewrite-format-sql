@@ -21,9 +21,9 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:https://github.com/mhagnumdw/rewrite-format-sql.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/mhagnumdw/rewrite-format-sql.git</developerConnection>
-        <url>https://github.com/mhagnumdw/rewrite-format-sql</url>
+        <connection>scm:git:${project.scm.url}</connection>
+        <developerConnection>scm:git:${project.scm.url}</developerConnection>
+        <url>https://github.com/mhagnumdw/rewrite-format-sql.git</url>
         <tag>HEAD</tag>
     </scm>
 
