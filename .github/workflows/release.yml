@@ -22,9 +22,6 @@ jobs:
           cache: maven
 
       - name: Setup git user.name and user.email
-        # run: |
-        #   git config --global user.name "${{ github.actor }}"
-        #   git config --global user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
         run: |
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR_ID}+${GITHUB_ACTOR}@users.noreply.github.com"
@@ -42,17 +39,14 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
 
       - name: Maven Release Prepare
-        # run: ./mvnw -V -B release:clean release:prepare -DreleaseVersion=${{ github.event.inputs.RELEASE_VERSION }} -DscmCommentPrefix="[maven-release-plugin] [skip ci] "
         run: ./mvnw -V -B release:clean release:prepare -DreleaseVersion=${{ inputs.RELEASE_VERSION }}
 
       - name: Publish to Maven Central Repository
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-        # run: ./mvnw -V -B deploy -DskipTests -Pcentral-release --settings .mvn/settings.xml
-        run: ./mvnw -V -B deploy -Pcentral-release --settings .mvn/settings.xml
-        # We use a custom settings.xml for release to specify the OSSRH server credentials
-        # The profile central-release should be defined in pom.xml to activate gpg signing for release builds if not active by default
+        # run: ./mvnw -V -B deploy -Pcentral-release --settings .mvn/settings.xml
+        run: ./mvnw -V -B release:perform -Pcentral-release --settings .mvn/settings.xml
 
       # - name: Push changes to main
       #   env:
