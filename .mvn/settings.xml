@@ -7,7 +7,7 @@
 			<password>${env.OSSRH_PASS}</password>
 		</server>
 	</servers>
-    <profiles>
+    <!-- <profiles>
         <profile>
             <id>central</id>
             <activation>
@@ -18,5 +18,5 @@
                 <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
             </properties>
         </profile>
-    </profiles>
+    </profiles> -->
 </settings>
