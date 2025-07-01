@@ -136,11 +136,6 @@
                     </statelessTestsetInfoReporter>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>3.5.3</version>
-            </plugin>
             <!--
             JaCoCo: mvn clean test
             https://www.jacoco.org/jacoco/trunk/doc/maven.html
