@@ -9,7 +9,7 @@ updates:
   - package-ecosystem: maven
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "quarterly"
 
   # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
