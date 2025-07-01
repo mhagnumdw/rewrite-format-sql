@@ -2,6 +2,7 @@
 
 [![ci](https://github.com/mhagnumdw/rewrite-format-sql/actions/workflows/ci.yml/badge.svg)](https://github.com/mhagnumdw/rewrite-format-sql/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/mhagnumdw/rewrite-format-sql/graph/badge.svg?token=88BB3MW6QA)](https://codecov.io/gh/mhagnumdw/rewrite-format-sql)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=mhagnumdw_rewrite-format-sql&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=mhagnumdw_rewrite-format-sql)
 [![Maven Central Version](https://img.shields.io/maven-central/v/io.github.mhagnumdw/rewrite-format-sql)](https://central.sonatype.com/artifact/io.github.mhagnumdw/rewrite-format-sql)
 
 A set of [OpenRewrite](https://docs.openrewrite.org/) recipes for formatting SQL/HQL code.
