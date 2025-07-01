@@ -76,7 +76,7 @@ echo
 
 log_i "Generating release..."
 set -x
-./mvnw clean release:clean release:prepare release:perform -Pcentral-release --settings .mvn/settings.xml
+./mvnw clean release:clean release:prepare release:perform --settings .mvn/settings.xml
 set +x
 
 echo

@@ -248,8 +248,7 @@
                     <pushChanges>true</pushChanges>
                     <scmCommentPrefix>[maven-release-plugin][ci skip] </scmCommentPrefix>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <!-- <useReleaseProfile>false</useReleaseProfile>
-                    <releaseProfiles>release</releaseProfiles> -->
+                    <preparationProfiles>central-release</preparationProfiles>
                 </configuration>
             </plugin>
             <plugin>
