@@ -68,6 +68,12 @@ export OSSRH_USER
 export OSSRH_PASS
 echo
 
+log_i "Enter GPG passphrase for key $(grep -oPm1 '(?<=<keyname>)[^<]+' pom.xml)"
+read -s -r -p "GPG Passphrase: " MAVEN_GPG_PASSPHRASE
+echo
+export MAVEN_GPG_PASSPHRASE
+echo
+
 log_i "Generating release..."
 set -x
 ./mvnw clean release:clean release:prepare release:perform -Pcentral-release --settings .mvn/settings.xml
