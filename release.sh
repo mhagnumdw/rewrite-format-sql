@@ -1,21 +1,20 @@
 #!/bin/bash
 
-# set -o verbose   # O mesmo que set -v
-# set -v           # Imprime as linha do script na medida que sao executadas
-set -e             # Se algum comando falhar o script para (cuidado, pois nao funciona para pipes e dentro de funcoes)
-# set -o pipefail  # Se algum pipe falhar o script para (complemento ao set -e)
-# set -x           # Para DEBUG, mostra as linhas do código durante a execução
-
-# // TODO: ao final traduzir para en-US como se fosse um nativo expert em desenvolvimento de software escrevendo
+set -e
 
 PS4="$(tput setaf 14)+ $(tput sgr0)"
 
 echo
 
-echo "Vai gerar:"
-echo " - Release; e"
-echo " - Próxima versão de desenvolvimento"
-echo "O pom.xml é alterado, feito commit e push. Os artefatos são publicados no Maven Central Repository."
+cat << 'EOF'
+This script will perform the following actions:
+ - Create a new release version.
+ - Set the next development version.
+ - Modify and commit the pom.xml file.
+ - Push the changes to the remote repository.
+ - Sign artifacts using the GPG key specified in pom.xml.
+ - Publish artifacts to the Maven Central Repository.
+EOF
 
 log_i() {
     echo "$(tput setaf 2)$1$(tput sgr0)"
@@ -26,52 +25,59 @@ log_e() {
 }
 
 DEFAULT_BRANCH="main"
-# // TODO: voltar para branch `$DEFAULT_BRANCH`
-if [ "prepare-release" != "$(git branch --show-current)" ]; then
-    log_e "Deve ser executado na branch $DEFAULT_BRANCH"
+if [ "$DEFAULT_BRANCH" != "$(git branch --show-current)" ]; then
+    log_e "This script must be run on the '$DEFAULT_BRANCH' branch."
     exit 1
 fi
 
 if [ ! -f "./pom.xml" ]; then
-    log_e "Deve ser executado na raiz do projeto"
+    log_e "This script must be run from the project root directory."
     exit 1
 fi
 
-# // TODO: descomentar
-# if [ -n "$(git fetch --dry-run)" ]; then
-#     log_e "O repositório local nao esta atualizado, execute: git pull"
-#     exit 1
-# fi
+if [ -n "$(git fetch --dry-run)" ]; then
+    log_e "Local repository is not up-to-date. Please run 'git pull'."
+    exit 1
+fi
 
 echo
 
-log_i "Confira os dados de usuário e email que estarão no commit"
-echo -n 'user.nome : '
+log_i "Verifying user and email for the commit"
+echo -n 'user.name : '
 git config user.name
 echo -n 'user.email: '
 git config user.email
 
-# // TODO: descomentar
-# echo
-# read -r -p "As informações estão corretas? Enter para sim, Ctrl+C para abortar"
-# echo
+echo
+read -r -p "Is this information correct? Press Enter to continue, or Ctrl+C to abort"
+echo
 
-log_i "Versão atual do pom.xml e versão do Java"
+log_i "Current pom.xml and Java versions"
 ./mvnw -V help:evaluate -Dexpression=project.version -q -DforceStdout
 echo
-read -r -p "As informações estão corretas? Enter para sim, Ctrl+C para abortar"
+read -r -p "Is this information correct? Press Enter to continue, or Ctrl+C to abort"
 echo
 
-log_i "Gerando release..."
+log_i "Enter credentials for deployment to Maven Central Repository (OSSRH)"
+echo "(You can get these from https://central.sonatype.com/account)"
+read -s -r -p "Username (OSSRH_USER): " OSSRH_USER
+echo
+read -s -r -p "Password (OSSRH_PASS): " OSSRH_PASS
+echo
+export OSSRH_USER
+export OSSRH_PASS
+echo
+
+log_i "Generating release..."
 set -x
-./mvnw clean release:clean release:prepare release:perform -Pcentral-release
+./mvnw clean release:clean release:prepare release:perform -Pcentral-release --settings .mvn/settings.xml
 set +x
 
 echo
 
-log_i "Mostrando os 7 últimos commits"
+log_i "Showing the last 7 commits"
 git log --pretty="%C(Yellow)%h  %C(reset)%ad (%C(Green)%cr%C(reset))%x09 %C(Cyan)%an (%ae): %C(reset)%s" -7
 
 echo
 
-log_i "Fim"
+log_i "Done."
