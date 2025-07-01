@@ -31,20 +31,10 @@ jobs:
         key: ${{ runner.os }}-sonar
         restore-keys: ${{ runner.os }}-sonar
 
-    # Still configured with `cache: maven` in setup-kava action
-    # - name: Cache Maven packages
-    #   uses: actions/cache@v4
-    #   with:
-    #     path: ~/.m2
-    #     key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-    #     restore-keys: ${{ runner.os }}-m2
-
     - name: Build and analyze
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: ./mvnw -B clean verify sonar:sonar
-      # run: ./mvnw -B clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=mhagnumdw_rewrite-format-sql
-      # -Dsonar.qualitygate.wait=true
 
     - name: Codecov Code Coverage
       uses: codecov/codecov-action@v5
