@@ -42,7 +42,9 @@ jobs:
     - name: Build and analyze
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: ./mvnw -B clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=mhagnumdw_rewrite-format-sql
+      run: ./mvnw -B clean verify sonar:sonar
+      # run: ./mvnw -B clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=mhagnumdw_rewrite-format-sql
+      # -Dsonar.qualitygate.wait=true
 
     - name: Codecov Code Coverage
       uses: codecov/codecov-action@v5
