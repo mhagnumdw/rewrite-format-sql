@@ -20,6 +20,14 @@
         </license>
     </licenses>
 
+    <developers>
+        <developer>
+            <name>MhagnumDw</name>
+            <organization>MhagnumDw</organization>
+            <organizationUrl>https://github.com/mhagnumdw</organizationUrl>
+        </developer>
+    </developers>
+
     <scm>
         <connection>scm:git:${project.scm.url}</connection>
         <developerConnection>scm:git:git@github.com:mhagnumdw/rewrite-format-sql.git</developerConnection>
