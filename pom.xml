@@ -185,7 +185,6 @@
                         <recipe>org.openrewrite.java.format.RemoveTrailingWhitespace</recipe>
                         <!-- Maven -->
                         <recipe>org.openrewrite.maven.BestPractices</recipe>
-                        <recipe>org.openrewrite.maven.RemoveUnusedProperties</recipe>
                         <!-- SAST -->
                         <recipe>org.openrewrite.staticanalysis.CommonStaticAnalysis</recipe>
                         <recipe>org.openrewrite.staticanalysis.SimplifyTernaryRecipes</recipe>
