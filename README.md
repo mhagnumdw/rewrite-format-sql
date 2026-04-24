@@ -9,10 +9,12 @@ A set of [OpenRewrite](https://docs.openrewrite.org/) recipes for formatting SQL
 
 - [Recipes](#recipes)
   - [FormatSqlBlockRecipe](#formatsqlblockrecipe)
+  - [FormatSqlTextBlockRecipe](#formatsqltextblockrecipe)
   - [FormatSqlFileRecipe](#formatsqlfilerecipe)
 - [Configurable Options](#configurable-options)
 - [Examples](#examples)
   - [FormatSqlBlockRecipe Example](#formatsqlblockrecipe-example)
+  - [FormatSqlTextBlockRecipe Example](#formatsqltextblockrecipe-example)
   - [FormatSqlFileRecipe Example](#formatsqlfilerecipe-example)
 - [Usage](#usage)
   - [Configuring in `pom.xml`](#configuring-in-pomxml)
@@ -33,13 +35,19 @@ The `io.github.mhagnumdw.FormatSqlBlockRecipe` recipe automatically formats SQL 
 
 > Future enhancements may allow configuration of custom annotations. Please open an issue.
 
+### FormatSqlTextBlockRecipe
+
+The `io.github.mhagnumdw.FormatSqlTextBlockRecipe` recipe formats SQL code in Java [Text Blocks](https://docs.oracle.com/en/java/javase/13/text_blocks/index.html) that are preceded by a `// language=sql` comment (case-insensitive).
+
+This is the same [language injection comment](https://www.jetbrains.com/help/idea/language-injections.html) recognized by IntelliJ IDEA for SQL syntax highlighting.
+
 ### FormatSqlFileRecipe
 
 The `io.github.mhagnumdw.FormatSqlFileRecipe` recipe automatically formats the content of SQL files.
 
 ## Configurable Options
 
-The following options are applicable to both `FormatSqlBlockRecipe` and `FormatSqlFileRecipe`:
+The following options are applicable to `FormatSqlBlockRecipe`, `FormatSqlTextBlockRecipe`, and `FormatSqlFileRecipe`:
 
 | Type    | Name              | Description                                                                                                                                                                                           | Example  | Default Value |
 | :------ | :---------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------  | :------- | :------------------------- |
@@ -89,6 +97,33 @@ public interface HolidayRepository {
             h.name""")
     void findByYear(int year);
 }
+```
+
+### FormatSqlTextBlockRecipe Example
+
+Before
+
+```java
+// language=sql
+private static final String QUERY = """
+    select * from users u inner join orders o on u.id = o.user_id where u.active = true order by u.name
+    """;
+```
+
+After
+
+```java
+// language=sql
+private static final String QUERY = """
+    select
+        *
+    from
+        users u
+        inner join orders o on u.id = o.user_id
+    where
+        u.active = true
+    order by
+        u.name""";
 ```
 
 ### FormatSqlFileRecipe Example
