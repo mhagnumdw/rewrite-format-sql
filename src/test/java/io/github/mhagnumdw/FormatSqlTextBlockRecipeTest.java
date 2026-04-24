@@ -8,6 +8,8 @@ import org.openrewrite.DocumentExample;
 import org.openrewrite.test.RecipeSpec;
 import org.openrewrite.test.RewriteTest;
 
+// SonarQube doesn't recognize internal assertions in rewriteRun()
+@SuppressWarnings("java:S2699")
 class FormatSqlTextBlockRecipeTest implements RewriteTest {
 
     @Override
