@@ -41,8 +41,8 @@ public class FormatSqlTextBlockVisitor extends JavaIsoVisitor<ExecutionContext> 
         boolean changed = false;
 
         for (int i = 0; i < variables.size(); i++) {
-            J.VariableDeclarations.NamedVariable var = variables.get(i);
-            Expression initializer = var.getInitializer();
+            J.VariableDeclarations.NamedVariable variable = variables.get(i);
+            Expression initializer = variable.getInitializer();
 
             if (initializer == null || !TextBlockUtil.isTextBlock(initializer)) {
                 continue;
@@ -55,9 +55,9 @@ public class FormatSqlTextBlockVisitor extends JavaIsoVisitor<ExecutionContext> 
                 (Literal) initializer, indentation, dialect, formatConfig);
 
             if (newLiteral != null) {
-                var = var.withInitializer(newLiteral);
+                variable = variable.withInitializer(newLiteral);
                 List<J.VariableDeclarations.NamedVariable> newVariables = new ArrayList<>(variables);
-                newVariables.set(i, var);
+                newVariables.set(i, variable);
                 variables = newVariables;
                 changed = true;
             }
@@ -72,9 +72,6 @@ public class FormatSqlTextBlockVisitor extends JavaIsoVisitor<ExecutionContext> 
 
     private static boolean hasLanguageSqlComment(J.VariableDeclarations varDecls) {
         List<Comment> comments = varDecls.getPrefix().getComments();
-        if (comments == null) {
-            return false;
-        }
 
         for (Comment comment : comments) {
             if (comment instanceof TextComment) {
