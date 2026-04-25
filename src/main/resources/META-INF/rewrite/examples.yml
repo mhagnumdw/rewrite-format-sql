@@ -2,7 +2,7 @@
 type: specs.openrewrite.org/v1beta/example
 recipeName: io.github.mhagnumdw.FormatSqlBlockRecipe
 examples:
-- description: ''
+- description: '`FormatSqlBlockRecipeTest#shouldFormatSimpleSqlBlock`'
   parameters:
   - io/github/mhagnumdw/fake/holidays/HolidayRepository.java
   - plsql

@@ -24,6 +24,9 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
+    - name: "Debug: Maven Dependency Tree"
+      run: ./mvnw -V dependency:tree
+
     - name: Cache SonarQube packages
       uses: actions/cache@v5
       with:
@@ -34,7 +37,7 @@ jobs:
     - name: Build and analyze
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: ./mvnw -B clean verify sonar:sonar
+      run: ./mvnw -V -B clean verify sonar:sonar
 
     - name: Codecov Code Coverage
       uses: codecov/codecov-action@v6
@@ -46,5 +49,11 @@ jobs:
         verbose: false
 
     - name: Run Rewrite Dry Run
-      run: ./mvnw -B rewrite:dryRun -DfailOnDryRunResults=true
+      run: ./mvnw -V -B rewrite:dryRun -DfailOnDryRunResults=true
 
+    - name: Upload Rewrite Patch
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: rewrite-patch
+        path: target/rewrite/rewrite.patch

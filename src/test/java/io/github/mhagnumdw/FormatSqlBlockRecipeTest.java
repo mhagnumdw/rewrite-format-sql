@@ -1,5 +1,7 @@
 package io.github.mhagnumdw;
 
+import static java.util.Collections.emptySet;
+import static java.util.Collections.singletonList;
 import static org.openrewrite.Tree.randomId;
 import static org.openrewrite.java.Assertions.java;
 import static org.openrewrite.java.Assertions.javaVersion;
@@ -11,8 +13,6 @@ import org.openrewrite.java.style.TabsAndIndentsStyle;
 import org.openrewrite.style.NamedStyles;
 import org.openrewrite.test.RecipeSpec;
 import org.openrewrite.test.RewriteTest;
-
-import java.util.Collections;
 
 @SuppressWarnings("java:S2699")
 class FormatSqlBlockRecipeTest implements RewriteTest {
@@ -146,13 +146,13 @@ class FormatSqlBlockRecipeTest implements RewriteTest {
     void shouldFormatSqlBlockWithTabs() {
         TabsAndIndentsStyle tabsStyle = IntelliJ.tabsAndIndents().withUseTabCharacter(true);
 
-        NamedStyles tabsNamedStyle = new NamedStyles(
+        var tabsNamedStyle = new NamedStyles(
             randomId(),
             "tabs-style",
             "Tabs style for testing",
             "test",
-            Collections.emptySet(),
-            Collections.singletonList(tabsStyle)
+            emptySet(),
+            singletonList(tabsStyle)
         );
 
         rewriteRun(

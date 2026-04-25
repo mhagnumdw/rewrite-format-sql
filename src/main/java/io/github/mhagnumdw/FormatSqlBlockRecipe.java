@@ -1,5 +1,9 @@
 package io.github.mhagnumdw;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.EqualsAndHashCode;
+import lombok.Value;
 import org.jspecify.annotations.Nullable;
 import org.openrewrite.ExecutionContext;
 import org.openrewrite.FindSourceFiles;
@@ -7,13 +11,8 @@ import org.openrewrite.Preconditions;
 import org.openrewrite.TreeVisitor;
 import org.openrewrite.java.search.UsesJavaVersion;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.vertical_blank.sqlformatter.core.FormatConfig;
 import com.github.vertical_blank.sqlformatter.languages.Dialect;
-
-import lombok.EqualsAndHashCode;
-import lombok.Value;
 
 /**
  * A recipe that formats SQL/HQL in Text Blocks within Java source files.
@@ -33,15 +32,9 @@ public class FormatSqlBlockRecipe extends FormatSqlRecipeAbstract {
         super(filePath == null ? DEFAULT_FILE_PATH : filePath, sqlDialect, indent, maxColumnLength, uppercase);
     }
 
-    @Override
-    public String getDisplayName() {
-        return "Format SQL Blocks in Java Code";
-    }
+    String displayName = "Format SQL Blocks in Java Code";
 
-    @Override
-    public String getDescription() {
-        return "Automatically formats embedded SQL code blocks within Java source files, improving readability and consistency.";
-    }
+    String description = "Automatically formats embedded SQL code blocks within Java source files, improving readability and consistency.";
 
     @Override
     TreeVisitor<?, ExecutionContext> getFormattingVisitor(Dialect dialect, FormatConfig formatConfig) {
