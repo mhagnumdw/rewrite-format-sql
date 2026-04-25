@@ -34,7 +34,7 @@ jobs:
     - name: Build and analyze
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: ./mvnw -B clean verify sonar:sonar
+      run: ./mvnw -V -B clean verify sonar:sonar
 
     - name: Codecov Code Coverage
       uses: codecov/codecov-action@v6
@@ -46,5 +46,5 @@ jobs:
         verbose: false
 
     - name: Run Rewrite Dry Run
-      run: ./mvnw -B rewrite:dryRun -DfailOnDryRunResults=true
+      run: ./mvnw -V -B rewrite:dryRun -DfailOnDryRunResults=true
 
