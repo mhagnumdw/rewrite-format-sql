@@ -18,7 +18,7 @@ jobs:
         fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
 
     - name: "Debug: Show Annotations.java (Start)"
-      run: cat src/main/java/io/github/mhagnumdw/processors/Annotations.java
+      run: cat src/main/java/io/github/mhagnumdw/processors/AnnotationProcessor.java
 
     - name: Set up JDK 17
       uses: actions/setup-java@v5
@@ -26,6 +26,9 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+
+    - name: "Debug: Maven Dependency Tree (Start)"
+      run: ./mvnw -V dependency:tree
 
     - name: Cache SonarQube packages
       uses: actions/cache@v5
@@ -49,7 +52,10 @@ jobs:
         verbose: false
 
     - name: "Debug: Show Annotations.java (Before Dry Run)"
-      run: cat src/main/java/io/github/mhagnumdw/processors/Annotations.java
+      run: cat src/main/java/io/github/mhagnumdw/processors/AnnotationProcessor.java
+
+    - name: "Debug: Maven Dependency Tree (Before Dry Run)"
+      run: ./mvnw -V dependency:tree
 
     - name: Run Rewrite Dry Run
       run: ./mvnw -V -B rewrite:dryRun -DfailOnDryRunResults=true
