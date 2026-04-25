@@ -1,5 +1,6 @@
 package io.github.mhagnumdw.processors;
 
+import static java.util.Collections.singletonList;
 import static org.openrewrite.Tree.randomId;
 
 import org.openrewrite.Cursor;
@@ -15,8 +16,8 @@ import org.openrewrite.java.tree.TypeUtils;
 import org.openrewrite.marker.Markers;
 import org.openrewrite.style.Style;
 
-import java.util.Collections;
 import java.util.List;
+
 
 import com.github.vertical_blank.sqlformatter.SqlFormatter;
 import com.github.vertical_blank.sqlformatter.core.FormatConfig;
@@ -76,7 +77,7 @@ abstract class AnnotationOnlyOneArgumentProcessor implements AnnotationProcessor
         J.Literal newLiteral = new J.Literal(randomId(), literal.getPrefix(), Markers.EMPTY, sqlFormatted,
             String.format("\"\"\"%s\"\"\"", sqlFormatted), null, JavaType.Primitive.String);
 
-        return annotation.withArguments(Collections.singletonList(newLiteral));
+        return annotation.withArguments(singletonList(newLiteral));
     }
 
     // Retrieve the file indentation based on the style of the file

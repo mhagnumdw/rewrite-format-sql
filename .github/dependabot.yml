@@ -10,6 +10,10 @@ updates:
     directory: "/"
     schedule:
       interval: "quarterly"
+    groups:
+      openrewrite:
+        patterns:
+          - "org.openrewrite*"
 
   # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
