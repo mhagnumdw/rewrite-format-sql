@@ -53,7 +53,7 @@ jobs:
 
     - name: Upload Rewrite Patch
       if: failure()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: rewrite-patch
         path: target/rewrite/rewrite.patch
