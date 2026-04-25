@@ -5,10 +5,11 @@ import static java.util.Collections.singletonList;
 import com.github.vertical_blank.sqlformatter.core.FormatConfig;
 import com.github.vertical_blank.sqlformatter.languages.Dialect;
 import io.github.mhagnumdw.TextBlockUtil;
-import java.util.List;
 import org.openrewrite.Cursor;
 import org.openrewrite.java.tree.Expression;
 import org.openrewrite.java.tree.J;
+
+import java.util.List;
 
 /**
  * This abstract class provides a common tasks for processing annotations that contain an annotation with single SQL/HQL

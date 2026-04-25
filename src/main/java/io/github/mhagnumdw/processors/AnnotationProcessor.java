@@ -1,10 +1,9 @@
 package io.github.mhagnumdw.processors;
 
-import org.openrewrite.Cursor;
-import org.openrewrite.java.tree.J;
-
 import com.github.vertical_blank.sqlformatter.core.FormatConfig;
 import com.github.vertical_blank.sqlformatter.languages.Dialect;
+import org.openrewrite.Cursor;
+import org.openrewrite.java.tree.J;
 
 /**
  * This interface defines the contract for processing annotations that contain an annotation with SQL/HQL.

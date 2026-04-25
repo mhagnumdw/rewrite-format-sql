@@ -2,6 +2,9 @@ package io.github.mhagnumdw;
 
 import static org.openrewrite.Tree.randomId;
 
+import com.github.vertical_blank.sqlformatter.SqlFormatter;
+import com.github.vertical_blank.sqlformatter.core.FormatConfig;
+import com.github.vertical_blank.sqlformatter.languages.Dialect;
 import org.jspecify.annotations.Nullable;
 import org.openrewrite.Cursor;
 import org.openrewrite.internal.StringUtils;
@@ -14,10 +17,6 @@ import org.openrewrite.java.tree.JavaType;
 import org.openrewrite.java.tree.TypeUtils;
 import org.openrewrite.marker.Markers;
 import org.openrewrite.style.Style;
-
-import com.github.vertical_blank.sqlformatter.SqlFormatter;
-import com.github.vertical_blank.sqlformatter.core.FormatConfig;
-import com.github.vertical_blank.sqlformatter.languages.Dialect;
 
 /**
  * Utility class for formatting SQL in Java Text Blocks.

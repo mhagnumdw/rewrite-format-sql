@@ -1,5 +1,8 @@
 package io.github.mhagnumdw;
 
+import com.github.vertical_blank.sqlformatter.SqlFormatter;
+import com.github.vertical_blank.sqlformatter.core.FormatConfig;
+import com.github.vertical_blank.sqlformatter.languages.Dialect;
 import org.jspecify.annotations.Nullable;
 import org.openrewrite.ExecutionContext;
 import org.openrewrite.SourceFile;
@@ -8,10 +11,6 @@ import org.openrewrite.TreeVisitor;
 import org.openrewrite.text.PlainText;
 
 import java.util.Objects;
-
-import com.github.vertical_blank.sqlformatter.SqlFormatter;
-import com.github.vertical_blank.sqlformatter.core.FormatConfig;
-import com.github.vertical_blank.sqlformatter.languages.Dialect;
 
 public class FormatSqlFileVisitor extends TreeVisitor<Tree, ExecutionContext> {
 

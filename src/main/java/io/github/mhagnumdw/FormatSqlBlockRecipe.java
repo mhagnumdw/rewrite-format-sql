@@ -2,6 +2,8 @@ package io.github.mhagnumdw;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.vertical_blank.sqlformatter.core.FormatConfig;
+import com.github.vertical_blank.sqlformatter.languages.Dialect;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
 import org.jspecify.annotations.Nullable;
@@ -10,9 +12,6 @@ import org.openrewrite.FindSourceFiles;
 import org.openrewrite.Preconditions;
 import org.openrewrite.TreeVisitor;
 import org.openrewrite.java.search.UsesJavaVersion;
-
-import com.github.vertical_blank.sqlformatter.core.FormatConfig;
-import com.github.vertical_blank.sqlformatter.languages.Dialect;
 
 /**
  * A recipe that formats SQL/HQL in Text Blocks within Java source files.
