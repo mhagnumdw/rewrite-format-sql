@@ -60,3 +60,9 @@ jobs:
     - name: Run Rewrite Dry Run
       run: ./mvnw -V -B rewrite:dryRun -DfailOnDryRunResults=true
 
+    - name: Upload Rewrite Patch
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: rewrite-patch
+        path: target/rewrite/rewrite.patch
