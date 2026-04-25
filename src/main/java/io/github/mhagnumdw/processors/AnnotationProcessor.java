@@ -3,7 +3,6 @@ package io.github.mhagnumdw.processors;
 import org.openrewrite.Cursor;
 import org.openrewrite.java.tree.J;
 
-
 import com.github.vertical_blank.sqlformatter.core.FormatConfig;
 import com.github.vertical_blank.sqlformatter.languages.Dialect;
 

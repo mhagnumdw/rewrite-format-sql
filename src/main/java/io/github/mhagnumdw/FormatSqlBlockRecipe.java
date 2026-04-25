@@ -11,7 +11,6 @@ import org.openrewrite.Preconditions;
 import org.openrewrite.TreeVisitor;
 import org.openrewrite.java.search.UsesJavaVersion;
 
-
 import com.github.vertical_blank.sqlformatter.core.FormatConfig;
 import com.github.vertical_blank.sqlformatter.languages.Dialect;
 

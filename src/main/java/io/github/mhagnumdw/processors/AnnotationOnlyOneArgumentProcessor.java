@@ -18,7 +18,6 @@ import org.openrewrite.style.Style;
 
 import java.util.List;
 
-
 import com.github.vertical_blank.sqlformatter.SqlFormatter;
 import com.github.vertical_blank.sqlformatter.core.FormatConfig;
 import com.github.vertical_blank.sqlformatter.languages.Dialect;
