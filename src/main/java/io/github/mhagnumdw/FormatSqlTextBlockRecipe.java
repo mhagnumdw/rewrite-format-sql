@@ -1,19 +1,17 @@
 package io.github.mhagnumdw;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.vertical_blank.sqlformatter.core.FormatConfig;
+import com.github.vertical_blank.sqlformatter.languages.Dialect;
+import lombok.EqualsAndHashCode;
+import lombok.Value;
 import org.jspecify.annotations.Nullable;
 import org.openrewrite.ExecutionContext;
 import org.openrewrite.FindSourceFiles;
 import org.openrewrite.Preconditions;
 import org.openrewrite.TreeVisitor;
 import org.openrewrite.java.search.UsesJavaVersion;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.vertical_blank.sqlformatter.core.FormatConfig;
-import com.github.vertical_blank.sqlformatter.languages.Dialect;
-
-import lombok.EqualsAndHashCode;
-import lombok.Value;
 
 @Value
 @EqualsAndHashCode(callSuper = false)
@@ -31,16 +29,10 @@ public class FormatSqlTextBlockRecipe extends FormatSqlRecipeAbstract {
         super(filePath == null ? DEFAULT_FILE_PATH : filePath, sqlDialect, indent, maxColumnLength, uppercase);
     }
 
-    @Override
-    public String getDisplayName() {
-        return "Format SQL Text Blocks marked with language injection comment";
-    }
+    String displayName = "Format SQL Text Blocks marked with language injection comment";
 
-    @Override
-    public String getDescription() {
-        return "Formats SQL code in Java Text Blocks that are preceded by " +
-             "a '// language=sql' comment (case-insensitive).";
-    }
+    String description = "Formats SQL code in Java Text Blocks that are preceded by " +
+        "a '// language=sql' comment (case-insensitive).";
 
     @Override
     TreeVisitor<?, ExecutionContext> getFormattingVisitor(

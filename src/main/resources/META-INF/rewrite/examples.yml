@@ -47,7 +47,7 @@ examples:
 type: specs.openrewrite.org/v1beta/example
 recipeName: io.github.mhagnumdw.FormatSqlTextBlockRecipe
 examples:
-- description: ''
+- description: '`FormatSqlTextBlockRecipeTest#shouldFormatFieldWithLanguageSqlComment`'
   parameters:
   - io/github/mhagnumdw/test/*.java
   - sql
