@@ -205,11 +205,6 @@
                         <artifactId>rewrite-rewrite</artifactId>
                         <version>0.24.1</version>
                     </dependency>
-                    <dependency>
-                        <groupId>org.openrewrite.recipe</groupId>
-                        <artifactId>rewrite-static-analysis</artifactId>
-                        <version>2.33.1</version>
-                    </dependency>
                 </dependencies>
             </plugin>
             <plugin>
