@@ -51,7 +51,7 @@ The following options are applicable to `FormatSqlBlockRecipe`, `FormatSqlTextBl
 
 | Type    | Name              | Description                                                                                                                                                                                           | Example  | Default Value |
 | :------ | :---------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------  | :------- | :------------------------- |
-| String  | `filePath`        | Optional. The path to the files that the Recipe should process. Accepts a glob expression; multiple patterns can be specified, separated by a semicolon `;`. If omitted, processes all matching files. | `**/*DAO.java` <br> `**/*.sql` | FormatSqlBlockRecipe: `**/*.java` <br> FormatSqlFileRecipe: `**/*.sql` |
+| String  | `filePath`        | Optional. The path to the files that the Recipe should process. Accepts a glob expression; multiple patterns can be specified, separated by a semicolon `;`. If omitted, processes all matching files. | `**/*DAO.java` <br> `**/*.sql` | FormatSqlBlockRecipe: `**/*.java` <br> FormatSqlTextBlockRecipe: `**/*.java` <br> FormatSqlFileRecipe: `**/*.sql` |
 | String  | `sqlDialect`      | Optional. The SQL dialect to be used for formatting. Valid options: `sql` (StandardSql), `mysql`, `postgresql`, `db2`, `plsql` (Oracle PL/SQL), `n1ql` (Couchbase N1QL), `redshift`, `spark`, `tsql` (SQL Server Transact-SQL). Details [here](https://github.com/vertical-blank/sql-formatter). | `plsql`  | `sql` |
 | String  | `indent`          | Optional. The string to be used for indentation.                                                                                                                                                     | `"  "` for 2 spaces <br> `"\t"` for a tab | 4 spaces `"    "` |
 | Integer | `maxColumnLength` | Optional. The maximum length of a line before the formatter tries to break it.                                                                                                              | `100`    | `120` |
@@ -175,6 +175,7 @@ Inside the plugins section, add:
         <activeRecipes>
             <!-- Add the recipes you want to use here -->
             <recipe>io.github.mhagnumdw.FormatSqlBlockRecipe</recipe>
+            <recipe>io.github.mhagnumdw.FormatSqlTextBlockRecipe</recipe>
             <recipe>io.github.mhagnumdw.FormatSqlFileRecipe</recipe>
         </activeRecipes>
         <failOnDryRunResults>false</failOnDryRunResults>
@@ -205,6 +206,8 @@ recipeList:
   # Add the Recipes you want to use here
   - io.github.mhagnumdw.FormatSqlBlockRecipe:
       sqlDialect: "plsql"
+  - io.github.mhagnumdw.FormatSqlTextBlockRecipe:
+      sqlDialect: "plsql"
   - io.github.mhagnumdw.FormatSqlFileRecipe:
       sqlDialect: "mysql"
 ```
@@ -220,7 +223,7 @@ And change the `<recipe>` tag in `pom.xml` to:
 <recipe>io.github.mhagnumdw.FormatSqlCustomConfig</recipe>
 ```
 
-> As in this example the `FormatSqlCustomConfig` recipe includes both `FormatSqlBlockRecipe` and `FormatSqlFileRecipe` recipes, in `pom.xml` it is only necessary to define the `FormatSqlCustomConfig` recipe.
+> As in this example the `FormatSqlCustomConfig` recipe includes both `FormatSqlBlockRecipe`, `FormatSqlTextBlockRecipe` and `FormatSqlFileRecipe` recipes, in `pom.xml` it is only necessary to define the `FormatSqlCustomConfig` recipe.
 
 Then run:
 
@@ -236,7 +239,7 @@ This mode is indicated if your intention is to run the recipe only once.
 
 ```bash
 ./mvnw org.openrewrite.maven:rewrite-maven-plugin:run \
-  -Drewrite.activeRecipes=io.github.mhagnumdw.FormatSqlBlockRecipe,io.github.mhagnumdw.FormatSqlFileRecipe \
+  -Drewrite.activeRecipes=io.github.mhagnumdw.FormatSqlBlockRecipe,io.github.mhagnumdw.FormatSqlTextBlockRecipe,io.github.mhagnumdw.FormatSqlFileRecipe \
   -Drewrite.recipeArtifactCoordinates=io.github.mhagnumdw:rewrite-format-sql:1.0.0
 ```
 
