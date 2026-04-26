@@ -1,8 +1,8 @@
 ---
 type: specs.openrewrite.org/v1beta/example
-recipeName: io.github.mhagnumdw.FormatSqlBlockRecipe
+recipeName: io.github.mhagnumdw.FormatSqlTextBlockByAnnotation
 examples:
-- description: '`FormatSqlBlockRecipeTest#shouldFormatSimpleSqlBlock`'
+- description: '`FormatSqlTextBlockByAnnotationTest#shouldFormatSimpleSqlBlock`'
   parameters:
   - io/github/mhagnumdw/fake/holidays/HolidayRepository.java
   - plsql
@@ -45,9 +45,9 @@ examples:
     language: java
 ---
 type: specs.openrewrite.org/v1beta/example
-recipeName: io.github.mhagnumdw.FormatSqlTextBlockRecipe
+recipeName: io.github.mhagnumdw.FormatSqlTextBlockByLanguageInjection
 examples:
-- description: '`FormatSqlTextBlockRecipeTest#shouldFormatFieldWithLanguageSqlComment`'
+- description: '`FormatSqlTextBlockByLanguageInjectionTest#shouldFormatFieldWithLanguageSqlComment`'
   parameters:
   - io/github/mhagnumdw/test/*.java
   - sql

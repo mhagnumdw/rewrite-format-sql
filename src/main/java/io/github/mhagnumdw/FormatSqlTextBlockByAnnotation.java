@@ -18,12 +18,12 @@ import org.openrewrite.java.search.UsesJavaVersion;
  */
 @Value
 @EqualsAndHashCode(callSuper = false)
-public class FormatSqlBlockRecipe extends FormatSqlRecipeAbstract {
+public class FormatSqlTextBlockByAnnotation extends FormatSqlRecipeAbstract {
 
     private static final String DEFAULT_FILE_PATH = "**/*.java";
 
     @JsonCreator
-    public FormatSqlBlockRecipe(@Nullable @JsonProperty("filePath") String filePath,
+    public FormatSqlTextBlockByAnnotation(@Nullable @JsonProperty("filePath") String filePath,
                                 @Nullable @JsonProperty("sqlDialect") String sqlDialect,
                                 @Nullable @JsonProperty("indent") String indent,
                                 @Nullable @JsonProperty("maxColumnLength") Integer maxColumnLength,

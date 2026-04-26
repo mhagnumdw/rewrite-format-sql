@@ -7,5 +7,6 @@
     "sonarlint.connectedMode.project": {
         "connectionId": "SonarQube for IDE - Visual Studio Code",
         "projectKey": "mhagnumdw_rewrite-format-sql"
-    }
+    },
+    "java.compile.nullAnalysis.mode": "automatic"
 }

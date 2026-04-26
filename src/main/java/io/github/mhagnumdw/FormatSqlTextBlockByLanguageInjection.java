@@ -15,12 +15,12 @@ import org.openrewrite.java.search.UsesJavaVersion;
 
 @Value
 @EqualsAndHashCode(callSuper = false)
-public class FormatSqlTextBlockRecipe extends FormatSqlRecipeAbstract {
+public class FormatSqlTextBlockByLanguageInjection extends FormatSqlRecipeAbstract {
 
     private static final String DEFAULT_FILE_PATH = "**/*.java";
 
     @JsonCreator
-    public FormatSqlTextBlockRecipe(
+    public FormatSqlTextBlockByLanguageInjection(
             @Nullable @JsonProperty("filePath") String filePath,
             @Nullable @JsonProperty("sqlDialect") String sqlDialect,
             @Nullable @JsonProperty("indent") String indent,

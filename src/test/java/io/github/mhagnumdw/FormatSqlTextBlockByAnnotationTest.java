@@ -15,12 +15,12 @@ import org.openrewrite.test.RecipeSpec;
 import org.openrewrite.test.RewriteTest;
 
 @SuppressWarnings("java:S2699")
-class FormatSqlBlockRecipeTest implements RewriteTest {
+class FormatSqlTextBlockByAnnotationTest implements RewriteTest {
 
     @Override
     public void defaults(RecipeSpec spec) {
         spec.recipe(
-            new FormatSqlBlockRecipe(
+            new FormatSqlTextBlockByAnnotation(
                 "io/github/mhagnumdw/fake/holidays/HolidayRepository.java",
                 "plsql",
                 null,
@@ -157,7 +157,7 @@ class FormatSqlBlockRecipeTest implements RewriteTest {
 
         rewriteRun(
             spec -> spec.recipe(
-                new FormatSqlBlockRecipe(
+                new FormatSqlTextBlockByAnnotation(
                     "io/github/mhagnumdw/fake/holidays/HolidayRepository.java",
                     "plsql",
                     "\t", // Use tab for SQL block indentation
