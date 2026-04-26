@@ -43,3 +43,40 @@ examples:
           void select();
       }
     language: java
+---
+type: specs.openrewrite.org/v1beta/example
+recipeName: io.github.mhagnumdw.FormatSqlTextBlockRecipe
+examples:
+- description: '`FormatSqlTextBlockRecipeTest#shouldFormatFieldWithLanguageSqlComment`'
+  parameters:
+  - io/github/mhagnumdw/test/*.java
+  - sql
+  - 'null'
+  - 'null'
+  - 'null'
+  sources:
+  - before: |
+      package io.github.mhagnumdw.test;
+
+      public class MyQuery {
+          // language=sql
+          private static final String QUERY = """
+              select * from users u inner join orders o on u.id = o.user_id where u.active = true order by u.name""";
+      }
+    after: |
+      package io.github.mhagnumdw.test;
+
+      public class MyQuery {
+          // language=sql
+          private static final String QUERY = """
+              select
+                  *
+              from
+                  users u
+                  inner join orders o on u.id = o.user_id
+              where
+                  u.active = true
+              order by
+                  u.name""";
+      }
+    language: java
