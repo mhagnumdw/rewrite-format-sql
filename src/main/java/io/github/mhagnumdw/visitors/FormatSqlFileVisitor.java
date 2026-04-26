@@ -3,6 +3,8 @@ package io.github.mhagnumdw.visitors;
 import com.github.vertical_blank.sqlformatter.SqlFormatter;
 import com.github.vertical_blank.sqlformatter.core.FormatConfig;
 import com.github.vertical_blank.sqlformatter.languages.Dialect;
+import io.github.mhagnumdw.utils.NewlineType;
+import io.github.mhagnumdw.utils.SourceUtils;
 import org.jspecify.annotations.Nullable;
 import org.openrewrite.ExecutionContext;
 import org.openrewrite.SourceFile;
@@ -33,7 +35,11 @@ public class FormatSqlFileVisitor extends TreeVisitor<Tree, ExecutionContext> {
         PlainText plainText = (PlainText) sourceFile;
         String originalText = plainText.getText();
 
+        NewlineType endingNewline = SourceUtils.detectEndingNewline(originalText);
+
         String sqlFormatted = SqlFormatter.of(dialect).format(originalText, formatConfig);
+
+        sqlFormatted = sqlFormatted + endingNewline.getValue();
 
         if (originalText.equals(sqlFormatted)) {
             return plainText;
