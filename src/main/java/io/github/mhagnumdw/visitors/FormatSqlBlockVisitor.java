@@ -1,4 +1,4 @@
-package io.github.mhagnumdw;
+package io.github.mhagnumdw.visitors;
 
 import com.github.vertical_blank.sqlformatter.core.FormatConfig;
 import com.github.vertical_blank.sqlformatter.languages.Dialect;
@@ -13,7 +13,7 @@ public class FormatSqlBlockVisitor extends JavaIsoVisitor<ExecutionContext> {
     private final Dialect dialect;
     private final FormatConfig formatConfig;
 
-    FormatSqlBlockVisitor(Dialect dialect, FormatConfig formatConfig) {
+    public FormatSqlBlockVisitor(Dialect dialect, FormatConfig formatConfig) {
         this.dialect = dialect;
         this.formatConfig = formatConfig;
     }

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Breaking Changes
+
+- Rename recipe `io.github.mhagnumdw.FormatSqlBlockRecipe` to `io.github.mhagnumdw.recipes.FormatSqlTextBlockByAnnotation`
+- Rename recipe `io.github.mhagnumdw.FormatSqlFileRecipe` to `io.github.mhagnumdw.recipes.FormatSqlFile`
+
 ### Added
 
 - **FormatSqlTextBlockRecipe**: for SQL Text Blocks marked with `// language=sql` (#20)

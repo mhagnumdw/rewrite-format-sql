@@ -1,4 +1,4 @@
-package io.github.mhagnumdw;
+package io.github.mhagnumdw.recipes;
 
 import static org.openrewrite.java.Assertions.java;
 import static org.openrewrite.java.Assertions.javaVersion;
@@ -10,12 +10,12 @@ import org.openrewrite.test.RewriteTest;
 
 // SonarQube doesn't recognize internal assertions in rewriteRun()
 @SuppressWarnings("java:S2699")
-class FormatSqlTextBlockRecipeTest implements RewriteTest {
+class FormatSqlTextBlockByLanguageInjectionTest implements RewriteTest {
 
     @Override
     public void defaults(RecipeSpec spec) {
         spec.recipe(
-            new FormatSqlTextBlockRecipe(
+            new FormatSqlTextBlockByLanguageInjection(
                 "io/github/mhagnumdw/test/*.java",
                 "sql",
                 null,

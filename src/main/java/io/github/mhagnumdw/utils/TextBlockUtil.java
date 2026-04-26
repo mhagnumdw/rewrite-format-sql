@@ -1,4 +1,4 @@
-package io.github.mhagnumdw;
+package io.github.mhagnumdw.utils;
 
 import static org.openrewrite.Tree.randomId;
 

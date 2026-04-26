@@ -1,9 +1,10 @@
-package io.github.mhagnumdw;
+package io.github.mhagnumdw.visitors;
 
 import static org.openrewrite.java.tree.J.Literal;
 
 import com.github.vertical_blank.sqlformatter.core.FormatConfig;
 import com.github.vertical_blank.sqlformatter.languages.Dialect;
+import io.github.mhagnumdw.utils.TextBlockUtil;
 import org.openrewrite.ExecutionContext;
 import org.openrewrite.java.JavaIsoVisitor;
 import org.openrewrite.java.tree.Comment;
@@ -24,7 +25,7 @@ public class FormatSqlTextBlockVisitor extends JavaIsoVisitor<ExecutionContext> 
     private final Dialect dialect;
     private final FormatConfig formatConfig;
 
-    FormatSqlTextBlockVisitor(Dialect dialect, FormatConfig formatConfig) {
+    public FormatSqlTextBlockVisitor(Dialect dialect, FormatConfig formatConfig) {
         this.dialect = dialect;
         this.formatConfig = formatConfig;
     }
