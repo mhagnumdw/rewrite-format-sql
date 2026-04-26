@@ -35,7 +35,7 @@
 
     <properties>
         <maven.compiler.release>8</maven.compiler.release>
-        <maven.compiler.testRelease>17</maven.compiler.testRelease>
+        <maven.compiler.testRelease>21</maven.compiler.testRelease>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <sonar.organization>mhagnumdw</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
@@ -83,7 +83,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.38</version>
+            <version>1.18.46</version>
             <scope>provided</scope>
         </dependency>
 
@@ -111,7 +111,7 @@
         </dependency>
         <dependency>
             <groupId>org.openrewrite</groupId>
-            <artifactId>rewrite-java-17</artifactId>
+            <artifactId>rewrite-java-21</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -161,7 +161,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.13</version>
+                <version>0.8.14</version>
                 <executions>
                     <execution>
                         <id>default-prepare-agent</id>
