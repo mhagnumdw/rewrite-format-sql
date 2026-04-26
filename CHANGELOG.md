@@ -9,20 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Breaking Changes
 
-- **Renamed recipes** (class names changed - update your configurations):
-  - `FormatSqlBlockRecipe` → `FormatSqlTextBlockByAnnotation`
-  - `FormatSqlTextBlockRecipe` → `FormatSqlTextBlockByLanguageInjection`
-
-  Update your `pom.xml`, `rewrite.yml`, or CLI arguments accordingly:
-
-  | Old Name | New Name |
-  |---------|---------|
-  | `io.github.mhagnumdw.FormatSqlFileRecipe` | `io.github.mhagnumdw.recipes.FormatSqlFileRecipe` |
-  | `io.github.mhagnumdw.FormatSqlBlockRecipe` | `io.github.mhagnumdw.recipes.FormatSqlTextBlockByAnnotation` |
-  | `io.github.mhagnumdw.FormatSqlTextBlockRecipe` | `io.github.mhagnumdw.recipes.FormatSqlTextBlockByLanguageInjection` |
+- Rename recipe `io.github.mhagnumdw.FormatSqlBlockRecipe` to `io.github.mhagnumdw.recipes.FormatSqlTextBlockByAnnotation`
+- Rename recipe `io.github.mhagnumdw.FormatSqlTextBlockRecipe` to `io.github.mhagnumdw.recipes.FormatSqlTextBlockByLanguageInjection`
+- Rename recipe `io.github.mhagnumdw.FormatSqlFileRecipe` to `io.github.mhagnumdw.recipes.FormatSqlFileRecipe`
 
 ### Added
 
-- New recipe names that better describe their purpose:
-  - `FormatSqlTextBlockByAnnotation` - formats SQL in Text Blocks by annotation (`@HQL`, `@SQL`, `@Query`)
-  - `FormatSqlTextBlockByLanguageInjection` - formats SQL in Text Blocks marked with `// language=sql` comment
+- **FormatSqlTextBlockRecipe**: for SQL Text Blocks marked with `// language=sql` (#20)
+
+## [1.0.0] - 2024-11-24
+
+### Added
+
+- **FormatSqlBlockRecipe**: Recipe that formats SQL/HQL in Text Blocks within Java source files
+- **FormatSqlFileRecipe**: Recipe for formatting SQL files
