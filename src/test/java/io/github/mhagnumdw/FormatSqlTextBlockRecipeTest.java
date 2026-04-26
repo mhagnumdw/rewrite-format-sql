@@ -253,8 +253,7 @@ class FormatSqlTextBlockRecipeTest implements RewriteTest {
         );
     }
 
-    // Block with multiple variables in the same declaration, like
-    // String q1 = """...""", q2 = """...""";
+    // Block with multiple variables in the same declaration
     @Test
     void shouldFormatMultipleVariablesInSameDeclaration() {
         rewriteRun(
