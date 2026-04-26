@@ -12,7 +12,7 @@ If you have an idea for a new feature or an improvement to an existing one, plea
 
 ## Development
 
-This project uses Java 8 for the main source and Java 17 for the test source. When importing into Eclipse as a Maven project, you need to manually change to Java 17: `right-click on the project > Build Path > Configure Build Path... > Libraries`, remove Java 8 and add Java 17 using the `Add Library...` button.
+This project uses Java 8 for the main source and Java 21 for the test source. When importing into Eclipse as a Maven project, you need to manually change to Java 21: `right-click on the project > Build Path > Configure Build Path... > Libraries`, remove Java 8 and add Java 21 using the `Add Library...` button.
 
 To test in the real environment during development, just install the JAR and reference the SNAPSHOT version:
 

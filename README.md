@@ -19,6 +19,8 @@ A set of [OpenRewrite](https://docs.openrewrite.org/) recipes for formatting SQL
 - [Usage](#usage)
   - [Configuring in `pom.xml`](#configuring-in-pomxml)
   - [Without adding anything to the project](#without-adding-anything-to-the-project)
+- [Compatibility](#compatibility)
+- [Changelog](#changelog)
 - [For Developers](#for-developers)
 
 ## Recipes
@@ -255,6 +257,16 @@ Then run:
 
 > - `io.github.mhagnumdw.recipes.FormatSqlCustomConfig` is the `name` defined in the `rewrite.yml` file.
 > - For a single recipe, you don't even need to have the `rewrite.yml` file to customize the configuration, see [here](https://docs.openrewrite.org/reference/faq#is-it-possible-to-pass-arguments-to-a-recipe-from-the-command-line).
+
+## Compatibility
+
+These recipes are compatible with Java projects version 8 or higher.
+
+> _**For developers**: The project requires JDK 21 to compile and run tests, but uses Java 8 for the recipes (src/main/java). More information in [CONTRIBUTING.md](CONTRIBUTING.md)._
+
+## Changelog
+
+For a detailed list of changes, please see our [CHANGELOG.md](CHANGELOG.md) file.
 
 ## For Developers
 

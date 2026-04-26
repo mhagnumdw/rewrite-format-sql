@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Rename recipe `io.github.mhagnumdw.FormatSqlBlockRecipe` to `io.github.mhagnumdw.recipes.FormatSqlTextBlockByAnnotation`
 - Rename recipe `io.github.mhagnumdw.FormatSqlFileRecipe` to `io.github.mhagnumdw.recipes.FormatSqlFile`
 
+### Changed
+
+- Migrate test source code to JDK 21
+
 ### Fixed
 
 - **FormatSqlFile**: Preserves the trailing newline of the file
