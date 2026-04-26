@@ -10,12 +10,12 @@ A set of [OpenRewrite](https://docs.openrewrite.org/) recipes for formatting SQL
 - [Recipes](#recipes)
   - [FormatSqlTextBlockByAnnotation](#formatsqltextblockbyannotation)
   - [FormatSqlTextBlockByLanguageInjection](#formatsqltextblockbylanguageinjection)
-  - [FormatSqlFileRecipe](#formatsqlfilerecipe)
+  - [FormatSqlFile](#formatsqlfile)
 - [Configurable Options](#configurable-options)
 - [Examples](#examples)
   - [FormatSqlTextBlockByAnnotation example](#formatsqltextblockbyannotation-example)
   - [FormatSqlTextBlockByLanguageInjection example](#formatsqltextblockbylanguageinjection-example)
-  - [FormatSqlFileRecipe example](#formatsqlfilerecipe-example)
+  - [FormatSqlFile example](#formatsqlfile-example)
 - [Usage](#usage)
   - [Configuring in `pom.xml`](#configuring-in-pomxml)
   - [Without adding anything to the project](#without-adding-anything-to-the-project)
@@ -41,17 +41,17 @@ The `io.github.mhagnumdw.recipes.FormatSqlTextBlockByLanguageInjection` recipe f
 
 This is the same [language injection comment](https://www.jetbrains.com/help/idea/language-injections.html) recognized by IntelliJ IDEA for SQL syntax highlighting.
 
-### FormatSqlFileRecipe
+### FormatSqlFile
 
-The `io.github.mhagnumdw.recipes.FormatSqlFileRecipe` recipe automatically formats the content of SQL files.
+The `io.github.mhagnumdw.recipes.FormatSqlFile` recipe automatically formats the content of SQL files.
 
 ## Configurable Options
 
-The following options are applicable to `FormatSqlTextBlockByAnnotation`, `FormatSqlTextBlockByLanguageInjection`, and `FormatSqlFileRecipe`:
+The following options are applicable to `FormatSqlTextBlockByAnnotation`, `FormatSqlTextBlockByLanguageInjection`, and `FormatSqlFile`:
 
 | Type    | Name              | Description                                                                                                                                                                                           | Example  | Default Value |
 | :------ | :---------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------  | :------- | :------------------------- |
-| String  | `filePath`        | Optional. The path to the files that the Recipe should process. Accepts a glob expression; multiple patterns can be specified, separated by a semicolon `;`. If omitted, processes all matching files. | `**/*DAO.java` <br> `**/*.sql` | FormatSqlTextBlockByAnnotation: `**/*.java` <br> FormatSqlTextBlockByLanguageInjection: `**/*.java` <br> FormatSqlFileRecipe: `**/*.sql` |
+| String  | `filePath`        | Optional. The path to the files that the Recipe should process. Accepts a glob expression; multiple patterns can be specified, separated by a semicolon `;`. If omitted, processes all matching files. | `**/*DAO.java` <br> `**/*.sql` | FormatSqlTextBlockByAnnotation: `**/*.java` <br> FormatSqlTextBlockByLanguageInjection: `**/*.java` <br> FormatSqlFile: `**/*.sql` |
 | String  | `sqlDialect`      | Optional. The SQL dialect to be used for formatting. Valid options: `sql` (StandardSql), `mysql`, `postgresql`, `db2`, `plsql` (Oracle PL/SQL), `n1ql` (Couchbase N1QL), `redshift`, `spark`, `tsql` (SQL Server Transact-SQL). Details [here](https://github.com/vertical-blank/sql-formatter). | `plsql`  | `sql` |
 | String  | `indent`          | Optional. The string to be used for indentation.                                                                                                                                                     | `"  "` for 2 spaces <br> `"\t"` for a tab | 4 spaces `"    "` |
 | Integer | `maxColumnLength` | Optional. The maximum length of a line before the formatter tries to break it.                                                                                                              | `100`    | `120` |
@@ -126,7 +126,7 @@ private static final String QUERY = """
         u.name""";
 ```
 
-### FormatSqlFileRecipe example
+### FormatSqlFile example
 
 Consider the following `example.sql` file:
 
@@ -176,7 +176,7 @@ Inside the plugins section, add:
             <!-- Add the recipes you want to use here -->
             <recipe>io.github.mhagnumdw.recipes.FormatSqlTextBlockByAnnotation</recipe>
             <recipe>io.github.mhagnumdw.recipes.FormatSqlTextBlockByLanguageInjection</recipe>
-            <recipe>io.github.mhagnumdw.recipes.FormatSqlFileRecipe</recipe>
+            <recipe>io.github.mhagnumdw.recipes.FormatSqlFile</recipe>
         </activeRecipes>
         <failOnDryRunResults>false</failOnDryRunResults>
     </configuration>
@@ -208,7 +208,7 @@ recipeList:
       sqlDialect: "plsql"
   - io.github.mhagnumdw.recipes.FormatSqlTextBlockByLanguageInjection:
       sqlDialect: "plsql"
-  - io.github.mhagnumdw.recipes.FormatSqlFileRecipe:
+  - io.github.mhagnumdw.recipes.FormatSqlFile:
       sqlDialect: "plsql"
 ```
 
@@ -223,7 +223,7 @@ And change the `<recipe>` tag in `pom.xml` to:
 <recipe>io.github.mhagnumdw.recipes.FormatSqlCustomConfig</recipe>
 ```
 
-> As in this example the `FormatSqlCustomConfig` recipe includes both `FormatSqlTextBlockByAnnotation`, `FormatSqlTextBlockByLanguageInjection` and `FormatSqlFileRecipe` recipes, in `pom.xml` it is only necessary to define the `FormatSqlCustomConfig` recipe.
+> As in this example the `FormatSqlCustomConfig` recipe includes both `FormatSqlTextBlockByAnnotation`, `FormatSqlTextBlockByLanguageInjection` and `FormatSqlFile` recipes, in `pom.xml` it is only necessary to define the `FormatSqlCustomConfig` recipe.
 
 Then run:
 
@@ -239,7 +239,7 @@ This mode is indicated if your intention is to run the recipe only once.
 
 ```bash
 ./mvnw org.openrewrite.maven:rewrite-maven-plugin:run \
-  -Drewrite.activeRecipes=io.github.mhagnumdw.recipes.FormatSqlTextBlockByAnnotation,io.github.mhagnumdw.recipes.FormatSqlTextBlockByLanguageInjection,io.github.mhagnumdw.recipes.FormatSqlFileRecipe \
+  -Drewrite.activeRecipes=io.github.mhagnumdw.recipes.FormatSqlTextBlockByAnnotation,io.github.mhagnumdw.recipes.FormatSqlTextBlockByLanguageInjection,io.github.mhagnumdw.recipes.FormatSqlFile \
   -Drewrite.recipeArtifactCoordinates=io.github.mhagnumdw:rewrite-format-sql:1.0.0
 ```
 

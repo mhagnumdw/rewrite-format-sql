@@ -18,12 +18,12 @@ import org.openrewrite.TreeVisitor;
  */
 @Value
 @EqualsAndHashCode(callSuper = false)
-public class FormatSqlFileRecipe extends FormatSqlRecipeAbstract {
+public class FormatSqlFile extends FormatSqlRecipeAbstract {
 
     private static final String DEFAULT_FILE_PATH = "**/*.sql";
 
     @JsonCreator
-    public FormatSqlFileRecipe(@Nullable @JsonProperty("filePath") String filePath,
+    public FormatSqlFile(@Nullable @JsonProperty("filePath") String filePath,
                                @Nullable @JsonProperty("sqlDialect") String sqlDialect,
                                @Nullable @JsonProperty("indent") String indent,
                                @Nullable @JsonProperty("maxColumnLength") Integer maxColumnLength,

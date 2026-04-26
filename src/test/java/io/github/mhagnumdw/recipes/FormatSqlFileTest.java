@@ -9,12 +9,12 @@ import org.openrewrite.test.RecipeSpec;
 import org.openrewrite.test.RewriteTest;
 
 @SuppressWarnings("java:S2699")
-class FormatSqlFileRecipeTest implements RewriteTest {
+class FormatSqlFileTest implements RewriteTest {
 
     @Override
     public void defaults(RecipeSpec spec) {
         spec.recipe(
-            new FormatSqlFileRecipe(
+            new FormatSqlFile(
                 "file.sql",
                 "plsql",
                 null,
@@ -85,7 +85,7 @@ class FormatSqlFileRecipeTest implements RewriteTest {
     @Test
     void shouldFormatWithCustomOptions() {
         rewriteRun(
-            spec -> spec.recipe(new FormatSqlFileRecipe(null, "plsql", "\t", null, false)),
+            spec -> spec.recipe(new FormatSqlFile(null, "plsql", "\t", null, false)),
             text(
                 """
                 select e.emp_id, e.name, d.dept_name from employees e join departments d on e.dept_id = d.dept_id where e.salary > 50000;
