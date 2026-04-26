@@ -1,4 +1,4 @@
-package io.github.mhagnumdw;
+package io.github.mhagnumdw.recipes;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.vertical_blank.sqlformatter.core.FormatConfig;

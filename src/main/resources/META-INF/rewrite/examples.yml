@@ -1,6 +1,6 @@
 ---
 type: specs.openrewrite.org/v1beta/example
-recipeName: io.github.mhagnumdw.FormatSqlTextBlockByAnnotation
+recipeName: io.github.mhagnumdw.recipes.FormatSqlTextBlockByAnnotation
 examples:
 - description: '`FormatSqlTextBlockByAnnotationTest#shouldFormatSimpleSqlBlock`'
   parameters:
@@ -45,7 +45,7 @@ examples:
     language: java
 ---
 type: specs.openrewrite.org/v1beta/example
-recipeName: io.github.mhagnumdw.FormatSqlTextBlockByLanguageInjection
+recipeName: io.github.mhagnumdw.recipes.FormatSqlTextBlockByLanguageInjection
 examples:
 - description: '`FormatSqlTextBlockByLanguageInjectionTest#shouldFormatFieldWithLanguageSqlComment`'
   parameters:

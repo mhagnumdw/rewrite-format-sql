@@ -1,4 +1,4 @@
-package io.github.mhagnumdw;
+package io.github.mhagnumdw.recipes;
 
 import static org.openrewrite.test.SourceSpecs.other;
 import static org.openrewrite.test.SourceSpecs.text;

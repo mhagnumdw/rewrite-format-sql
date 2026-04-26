@@ -4,7 +4,7 @@ import static java.util.Collections.singletonList;
 
 import com.github.vertical_blank.sqlformatter.core.FormatConfig;
 import com.github.vertical_blank.sqlformatter.languages.Dialect;
-import io.github.mhagnumdw.TextBlockUtil;
+import io.github.mhagnumdw.utils.TextBlockUtil;
 import org.openrewrite.Cursor;
 import org.openrewrite.java.tree.Expression;
 import org.openrewrite.java.tree.J;

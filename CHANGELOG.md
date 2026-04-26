@@ -17,8 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
   | Old Name | New Name |
   |---------|---------|
-  | `io.github.mhagnumdw.FormatSqlBlockRecipe` | `io.github.mhagnumdw.FormatSqlTextBlockByAnnotation` |
-  | `io.github.mhagnumdw.FormatSqlTextBlockRecipe` | `io.github.mhagnumdw.FormatSqlTextBlockByLanguageInjection` |
+  | `io.github.mhagnumdw.FormatSqlFileRecipe` | `io.github.mhagnumdw.recipes.FormatSqlFileRecipe` |
+  | `io.github.mhagnumdw.FormatSqlBlockRecipe` | `io.github.mhagnumdw.recipes.FormatSqlTextBlockByAnnotation` |
+  | `io.github.mhagnumdw.FormatSqlTextBlockRecipe` | `io.github.mhagnumdw.recipes.FormatSqlTextBlockByLanguageInjection` |
 
 ### Added
 

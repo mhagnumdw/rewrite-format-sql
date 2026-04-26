@@ -1,4 +1,4 @@
-package io.github.mhagnumdw;
+package io.github.mhagnumdw.recipes;
 
 import static java.util.Collections.emptySet;
 import static java.util.Collections.singletonList;

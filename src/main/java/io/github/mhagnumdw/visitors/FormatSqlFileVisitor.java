@@ -1,4 +1,4 @@
-package io.github.mhagnumdw;
+package io.github.mhagnumdw.visitors;
 
 import com.github.vertical_blank.sqlformatter.SqlFormatter;
 import com.github.vertical_blank.sqlformatter.core.FormatConfig;

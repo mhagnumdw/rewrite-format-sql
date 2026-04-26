@@ -1,4 +1,4 @@
-package io.github.mhagnumdw;
+package io.github.mhagnumdw.recipes;
 
 import static org.openrewrite.java.Assertions.java;
 import static org.openrewrite.java.Assertions.javaVersion;

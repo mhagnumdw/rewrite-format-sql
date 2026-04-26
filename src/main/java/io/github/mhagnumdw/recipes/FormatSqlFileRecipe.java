@@ -1,9 +1,10 @@
-package io.github.mhagnumdw;
+package io.github.mhagnumdw.recipes;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.vertical_blank.sqlformatter.core.FormatConfig;
 import com.github.vertical_blank.sqlformatter.languages.Dialect;
+import io.github.mhagnumdw.visitors.FormatSqlFileVisitor;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
 import org.jspecify.annotations.Nullable;
