@@ -35,9 +35,36 @@ if [ ! -f "./pom.xml" ]; then
     exit 1
 fi
 
-if [ -n "$(git fetch --dry-run)" ]; then
-    log_e "Local repository is not up-to-date. Please run 'git pull'."
+# Check if working tree is clean (no uncommitted changes)
+if ! git diff-index --quiet HEAD --; then
+    log_e "Working tree has uncommitted changes. Please commit or stash them before releasing."
     exit 1
+fi
+
+# Check if local main is up-to-date with remote main
+log_i "Checking if local $DEFAULT_BRANCH is up-to-date with remote..."
+REMOTE_COMMIT=$(git ls-remote origin "$DEFAULT_BRANCH" 2>/dev/null | awk '{print $1}')
+
+if [ -z "$REMOTE_COMMIT" ]; then
+    log_e "Remote branch '$DEFAULT_BRANCH' not found in origin. Check your remote configuration."
+    exit 1
+fi
+
+LOCAL_COMMIT=$(git rev-parse "$DEFAULT_BRANCH")
+
+if [ "$LOCAL_COMMIT" != "$REMOTE_COMMIT" ]; then
+    # Check if local is behind remote (remote has commits local doesn't have)
+    if git merge-base --is-ancestor "$LOCAL_COMMIT" "$REMOTE_COMMIT" 2>/dev/null; then
+        log_e "Local '$DEFAULT_BRANCH' is behind remote. Please run 'git pull' first."
+        exit 1
+    # Check if local is ahead of remote (has unpushed commits)
+    elif git merge-base --is-ancestor "$REMOTE_COMMIT" "$LOCAL_COMMIT" 2>/dev/null; then
+        log_e "Local '$DEFAULT_BRANCH' has unpushed commits. Please push them first or reset to remote."
+        exit 1
+    else
+        log_e "Local '$DEFAULT_BRANCH' has diverged from remote. Please synchronize with 'git pull --rebase'."
+        exit 1
+    fi
 fi
 
 echo
