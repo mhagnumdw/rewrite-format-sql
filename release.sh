@@ -79,6 +79,10 @@ echo
 read -r -p "Is this information correct? Press Enter to continue, or Ctrl+C to abort"
 echo
 
+log_i "Verifying CHANGELOG.md"
+read -r -p "Is the CHANGELOG.md up-to-date? Press Enter to continue, or Ctrl+C to abort"
+echo
+
 log_i "Current pom.xml and Java versions"
 ./mvnw -V help:evaluate -Dexpression=project.version -q -DforceStdout
 echo
