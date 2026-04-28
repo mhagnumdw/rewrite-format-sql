@@ -4,7 +4,7 @@
 
     <groupId>io.github.mhagnumdw</groupId>
     <artifactId>rewrite-format-sql</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>2.0.0</version>
 
     <name>rewrite-format-sql</name>
     <description>An OpenRewrite recipe to format SQL/HQL code blocks in Java code and SQL files</description>
@@ -30,7 +30,7 @@
         <connection>scm:git:${project.scm.url}</connection>
         <developerConnection>scm:git:git@github.com:mhagnumdw/rewrite-format-sql.git</developerConnection>
         <url>https://github.com/mhagnumdw/rewrite-format-sql.git</url>
-        <tag>HEAD</tag>
+        <tag>v2.0.0</tag>
     </scm>
 
     <properties>
