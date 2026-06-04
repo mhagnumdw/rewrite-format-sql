@@ -146,7 +146,7 @@ class FormatSqlTextBlockByLanguageInjectionTest implements RewriteTest {
         );
     }
 
-    // Text Block without comment — does not change
+    // Text Block without comment - does not change
     @Test
     void shouldNotFormatWithoutComment() {
         rewriteRun(
@@ -163,7 +163,7 @@ class FormatSqlTextBlockByLanguageInjectionTest implements RewriteTest {
         );
     }
 
-    // Normal string with // language=sql — does not change
+    // Normal string with // language=sql - does not change
     @Test
     void shouldNotFormatNonTextBlockWithComment() {
         rewriteRun(
@@ -232,7 +232,7 @@ class FormatSqlTextBlockByLanguageInjectionTest implements RewriteTest {
         );
     }
 
-    // Block already formatted — no diff
+    // Block already formatted - no diff
     @Test
     void shouldNotChangeAlreadyFormatted() {
         rewriteRun(
@@ -297,7 +297,184 @@ class FormatSqlTextBlockByLanguageInjectionTest implements RewriteTest {
         );
     }
 
-    // Class outside the filePath — does not change
+    // Opt-out: language=sql present but sql-format:off - does not change
+    @Test
+    void shouldNotFormatWhenNoFormatComment() {
+        rewriteRun(
+            java(
+                """
+                package io.github.mhagnumdw.test;
+
+                public class MyQuery {
+                    // language=sql
+                    // sql-format:off
+                    private static final String QUERY = \"""
+                        select * from users where active = true\""";
+                }
+                """
+            )
+        );
+    }
+
+    // Opt-out works regardless of comment order
+    @Test
+    void shouldNotFormatWhenNoFormatCommentBeforeLanguage() {
+        rewriteRun(
+            java(
+                """
+                package io.github.mhagnumdw.test;
+
+                public class MyQuery {
+                    // sql-format:off
+                    // language=sql
+                    private static final String QUERY = \"""
+                        select * from users where active = true\""";
+                }
+                """
+            )
+        );
+    }
+
+    // Opt-out marker is case-insensitive
+    @Test
+    void shouldNotFormatWhenNoFormatCommentCaseInsensitive() {
+        rewriteRun(
+            java(
+                """
+                package io.github.mhagnumdw.test;
+
+                public class MyQuery {
+                    // language=sql
+                    // SQL-FORMAT:OFF
+                    private static final String QUERY = \"""
+                        select * from users where active = true\""";
+                }
+                """
+            )
+        );
+    }
+
+    // Opt-out marker must match exactly - extra spaces are not recognized, so the block is formatted
+    @Test
+    void shouldFormatWhenNoFormatCommentHasExtraSpaces() {
+        rewriteRun(
+            java(
+                """
+                package io.github.mhagnumdw.test;
+
+                public class MyQuery {
+                    // language=sql
+                    // sql-format : off
+                    private static final String QUERY = \"""
+                        select * from users where active = true\""";
+                }
+                """,
+                """
+                package io.github.mhagnumdw.test;
+
+                public class MyQuery {
+                    // language=sql
+                    // sql-format : off
+                    private static final String QUERY = \"""
+                        select
+                            *
+                        from
+                            users
+                        where
+                            active = true\""";
+                }
+                """
+            )
+        );
+    }
+
+    // sql-format:off without language=sql is irrelevant - still nothing to format
+    @Test
+    void shouldNotFormatNoFormatCommentWithoutLanguage() {
+        rewriteRun(
+            java(
+                """
+                package io.github.mhagnumdw.test;
+
+                public class MyQuery {
+                    // sql-format:off
+                    private static final String QUERY = \"""
+                        select * from users where active = true\""";
+                }
+                """
+            )
+        );
+    }
+
+    // A multiline block comment is not the opt-out marker, so the block is still formatted
+    @Test
+    void shouldFormatWithAdjacentMultilineComment() {
+        rewriteRun(
+            java(
+                """
+                package io.github.mhagnumdw.test;
+
+                public class MyQuery {
+                    // language=sql
+                    /* just a note, not a marker */
+                    private static final String QUERY = \"""
+                        select * from users where active = true\""";
+                }
+                """,
+                """
+                package io.github.mhagnumdw.test;
+
+                public class MyQuery {
+                    // language=sql
+                    /* just a note, not a marker */
+                    private static final String QUERY = \"""
+                        select
+                            *
+                        from
+                            users
+                        where
+                            active = true\""";
+                }
+                """
+            )
+        );
+    }
+
+    // A Javadoc comment is not a line comment, so it is ignored and the block is still formatted
+    @Test
+    void shouldFormatWithAdjacentJavadocComment() {
+        rewriteRun(
+            java(
+                """
+                package io.github.mhagnumdw.test;
+
+                public class MyQuery {
+                    // language=sql
+                    /** Javadoc note, not a marker */
+                    private static final String QUERY = \"""
+                        select * from users where active = true\""";
+                }
+                """,
+                """
+                package io.github.mhagnumdw.test;
+
+                public class MyQuery {
+                    // language=sql
+                    /** Javadoc note, not a marker */
+                    private static final String QUERY = \"""
+                        select
+                            *
+                        from
+                            users
+                        where
+                            active = true\""";
+                }
+                """
+            )
+        );
+    }
+
+    // Class outside the filePath - does not change
     @Test
     void shouldNotChangeUnrelatedClasses() {
         rewriteRun(
