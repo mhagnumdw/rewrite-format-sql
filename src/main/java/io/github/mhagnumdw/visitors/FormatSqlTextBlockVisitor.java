@@ -4,6 +4,7 @@ import static org.openrewrite.java.tree.J.Literal;
 
 import com.github.vertical_blank.sqlformatter.core.FormatConfig;
 import com.github.vertical_blank.sqlformatter.languages.Dialect;
+import io.github.mhagnumdw.utils.CommentUtils;
 import io.github.mhagnumdw.utils.TextBlockUtil;
 import org.openrewrite.ExecutionContext;
 import org.openrewrite.java.JavaIsoVisitor;
@@ -34,6 +35,10 @@ public class FormatSqlTextBlockVisitor extends JavaIsoVisitor<ExecutionContext> 
     public J.VariableDeclarations visitVariableDeclarations(J.VariableDeclarations varDecls, ExecutionContext ctx) {
 
         if (!hasLanguageSqlComment(varDecls)) {
+            return varDecls;
+        }
+
+        if (CommentUtils.hasNoFormatComment(varDecls.getPrefix().getComments())) {
             return varDecls;
         }
 

@@ -12,6 +12,7 @@ A set of [OpenRewrite](https://docs.openrewrite.org/) recipes for formatting SQL
   - [FormatSqlTextBlockByLanguageInjection](#formatsqltextblockbylanguageinjection)
   - [FormatSqlFile](#formatsqlfile)
 - [Configurable Options](#configurable-options)
+- [Skipping a specific block](#skipping-a-specific-block)
 - [Examples](#examples)
   - [FormatSqlTextBlockByAnnotation example](#formatsqltextblockbyannotation-example)
   - [FormatSqlTextBlockByLanguageInjection example](#formatsqltextblockbylanguageinjection-example)
@@ -58,6 +59,27 @@ The following options are applicable to `FormatSqlTextBlockByAnnotation`, `Forma
 | String  | `indent`          | Optional. The string to be used for indentation.                                                                                                                                                     | `"  "` for 2 spaces <br> `"\t"` for a tab | 4 spaces `"    "` |
 | Integer | `maxColumnLength` | Optional. The maximum length of a line before the formatter tries to break it.                                                                                                              | `100`    | `120` |
 | Boolean | `uppercase`       | Optional. Whether to convert SQL keywords to uppercase (not safe to use when the SQL dialect has case-sensitive identifiers).                                        | `true`   | `false` |
+
+## Skipping a specific block
+
+For the Java Text Block recipes (`FormatSqlTextBlockByAnnotation` and `FormatSqlTextBlockByLanguageInjection`), you can opt a single block out of formatting by adding a `// sql-format:off` line comment next to it. This is useful when, for example, you keep the `// language=sql` marker only for IDE syntax highlighting but do not want the block reformatted.
+
+```java
+// language=sql
+// sql-format:off
+private static final String QUERY = """
+    select * from users where active = true
+    """;
+```
+
+```java
+// sql-format:off
+@Query("""
+    select * from Holiday where year = :year""")
+void findByYear(int year);
+```
+
+The marker is case-insensitive (e.g. `// sql-format:off`) but must otherwise match exactly. For language injection it may appear in any order relative to the `// language=sql` comment. Unlike the IDE convention `// @formatter:off`, it does not require a closing marker - it only affects the block it precedes.
 
 ## Examples
 

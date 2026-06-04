@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **FormatSqlTextBlockByAnnotation** / **FormatSqlTextBlockByLanguageInjection**: opt a single block out of formatting with a `// sql-format:off` line comment
+
 ## [2.0.0] - 2026-04-28
 
 ### Breaking Changes
