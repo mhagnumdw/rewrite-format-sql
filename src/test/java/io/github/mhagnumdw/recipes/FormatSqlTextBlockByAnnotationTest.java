@@ -508,6 +508,29 @@ class FormatSqlTextBlockByAnnotationTest implements RewriteTest {
         );
     }
 
+    // Opt-out comment sitting directly on the annotation prefix (between two annotations) - does not change
+    @Test
+    void shouldNotFormatWhenNoFormatCommentOnAnnotationPrefix() {
+        rewriteRun(
+            java(
+                """
+                package io.github.mhagnumdw.fake.holidays;
+
+                import org.hibernate.annotations.processing.HQL;
+
+                public interface HolidayRepository {
+
+                    @Deprecated
+                    // sql-format:off
+                    @HQL(\"""
+                        select * from Holiday where year = :year\""")
+                    void select();
+                }
+                """
+            )
+        );
+    }
+
     @Test
     void shouldNotChangeUnsupportedAnnotations() {
         rewriteRun(

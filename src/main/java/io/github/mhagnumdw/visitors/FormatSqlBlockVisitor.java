@@ -53,11 +53,10 @@ public class FormatSqlBlockVisitor extends JavaIsoVisitor<ExecutionContext> {
         if (CommentUtils.hasNoFormatComment(annotation.getPrefix().getComments())) {
             return true;
         }
-        Object parent = cursor.getParentTreeCursor().getValue();
-        if (parent instanceof J) {
-            return CommentUtils.hasNoFormatComment(((J) parent).getPrefix().getComments());
-        }
-        return false;
+        // The nearest tree parent of an annotation is always a J node (method, field, class, or an
+        // enclosing annotation), so the cast is safe.
+        J parent = cursor.getParentTreeCursor().getValue();
+        return CommentUtils.hasNoFormatComment(parent.getPrefix().getComments());
     }
 
 }

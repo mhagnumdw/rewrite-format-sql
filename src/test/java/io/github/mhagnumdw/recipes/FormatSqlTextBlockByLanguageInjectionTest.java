@@ -406,6 +406,74 @@ class FormatSqlTextBlockByLanguageInjectionTest implements RewriteTest {
         );
     }
 
+    // A multiline block comment is not the opt-out marker, so the block is still formatted
+    @Test
+    void shouldFormatWithAdjacentMultilineComment() {
+        rewriteRun(
+            java(
+                """
+                package io.github.mhagnumdw.test;
+
+                public class MyQuery {
+                    // language=sql
+                    /* just a note, not a marker */
+                    private static final String QUERY = \"""
+                        select * from users where active = true\""";
+                }
+                """,
+                """
+                package io.github.mhagnumdw.test;
+
+                public class MyQuery {
+                    // language=sql
+                    /* just a note, not a marker */
+                    private static final String QUERY = \"""
+                        select
+                            *
+                        from
+                            users
+                        where
+                            active = true\""";
+                }
+                """
+            )
+        );
+    }
+
+    // A Javadoc comment is not a line comment, so it is ignored and the block is still formatted
+    @Test
+    void shouldFormatWithAdjacentJavadocComment() {
+        rewriteRun(
+            java(
+                """
+                package io.github.mhagnumdw.test;
+
+                public class MyQuery {
+                    // language=sql
+                    /** Javadoc note, not a marker */
+                    private static final String QUERY = \"""
+                        select * from users where active = true\""";
+                }
+                """,
+                """
+                package io.github.mhagnumdw.test;
+
+                public class MyQuery {
+                    // language=sql
+                    /** Javadoc note, not a marker */
+                    private static final String QUERY = \"""
+                        select
+                            *
+                        from
+                            users
+                        where
+                            active = true\""";
+                }
+                """
+            )
+        );
+    }
+
     // Class outside the filePath - does not change
     @Test
     void shouldNotChangeUnrelatedClasses() {

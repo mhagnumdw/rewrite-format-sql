@@ -22,12 +22,9 @@ public final class CommentUtils {
     /**
      * Returns {@code true} if any of the given comments is the {@code sql-format:off} opt-out marker.
      *
-     * @param comments the comments to inspect (may be {@code null})
+     * @param comments the comments to inspect (the LST always provides a non-null list)
      */
     public static boolean hasNoFormatComment(List<Comment> comments) {
-        if (comments == null) {
-            return false;
-        }
         for (Comment comment : comments) {
             if (comment instanceof TextComment) {
                 TextComment tc = (TextComment) comment;
