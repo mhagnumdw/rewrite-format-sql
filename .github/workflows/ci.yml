@@ -40,7 +40,7 @@ jobs:
       run: ./mvnw -V -B clean verify sonar:sonar
 
     - name: Codecov Code Coverage
-      uses: codecov/codecov-action@v6
+      uses: codecov/codecov-action@v7
       with:
         fail_ci_if_error: true # optional (default = false)
         files: ./target/site/jacoco/jacoco.xml
